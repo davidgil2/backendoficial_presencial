@@ -6,7 +6,7 @@ spring:
     properties:
       hibernate:
         order_inserts: true
-        dialect: org.hibernate.dialect.Oracle12cDialect
+        dialect: org.hibernate.dialect.OracleDialect
         jdbc:
           batch_size: 50
           lob:
@@ -17,9 +17,10 @@ spring:
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:oracle:thin://localhost:1521/airline-dev?serverTimezone=America/Bogota
-    username: username
-    password: password
+    #url: jdbc:oracle:thin://localhost:1521/airline-dev?serverTimezone=America/Bogota
+    url : jdbc:oracle:thin:@localhost:1521/ORCLCDB
+    username: Code_factory
+    password: codefactory123
     hikari:
       idle-timeout: 10000
       maximum-pool-size: 5
