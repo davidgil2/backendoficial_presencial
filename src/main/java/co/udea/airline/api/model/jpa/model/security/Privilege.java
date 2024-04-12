@@ -2,6 +2,8 @@ package co.udea.airline.api.model.jpa.model.security;
 
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Privilege {
+public class Privilege implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +29,9 @@ public class Privilege {
 
     @OneToMany(mappedBy = "privilege")
     private List<PositionPrivilege> positionAssoc;
+
+    @Override
+    public String getAuthority() {
+        return getName().toLowerCase();
+    }
 }

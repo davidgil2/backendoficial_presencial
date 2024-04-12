@@ -1,6 +1,7 @@
 package co.udea.airline.api.model.jpa.model.security;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,5 +31,10 @@ public class Position { // == Role
 
     @OneToMany(mappedBy = "position")
     private List<PositionPrivilege> privilegeAssoc;
+
+    public List<Privilege> getPrivileges() {
+        return getPrivilegeAssoc().stream()
+                .map(privAssoc -> privAssoc.getPrivilege()).collect(Collectors.toList());
+    }
 
 }

@@ -1,7 +1,13 @@
 package co.udea.airline.api.model.jpa.model.security;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,7 +30,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Person {
+public class Person implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,5 +74,53 @@ public class Person {
 
     @OneToMany(mappedBy = "person")
     private List<PersonPosition> positionAssoc;
+
+    public List<Position> getPositions() {
+        return getPositionAssoc().stream().map(posAssoc -> posAssoc.getPosition()).collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // prefix all roles with 'ROLE_' and uppercase them
+        List<GrantedAuthority> authorities = getPositions().stream()
+                .map(pos -> new SimpleGrantedAuthority("ROLE_".concat(pos.getName().toUpperCase())))
+                .collect(Collectors.toList());
+
+        // add all privleges
+        authorities.addAll(
+                getPositions().stream()
+                        .map(pos -> pos.getPrivileges())
+                        .flatMap(List::stream)
+                        .collect(Collectors.toList()));
+
+        return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmail();
+    }
+
+    // TODO: implement in the db all of the below methods
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }
