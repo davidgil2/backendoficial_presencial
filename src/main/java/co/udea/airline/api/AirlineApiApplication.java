@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({
         "co.udea.airline.api.controller",
         "co.udea.airline.api.model",
-        "co.udea.airline.api.services",
+        "co.udea.airline.api.service",
         "co.udea.airline.api.utils",
 })
 
