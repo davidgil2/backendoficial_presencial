@@ -9,7 +9,7 @@ spring:
     properties:
       hibernate:
         order_inserts: true
-        dialect: org.hibernate.dialect.OracleDialect
+        dialect: org.hibernate.dialect.Oracle12cDialect # o org.hibernate.dialect.Oracle10gDialect
         jdbc:
           batch_size: 50
           lob:
@@ -17,16 +17,15 @@ spring:
         default_schema: ${ORACLE_USR}
         temp:
           use_jdbc_metadata_defaults: false
-
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:oracle:thin:@localhost:1521:xe
+    url: jdbc:oracle:thin:@localhost:1521:XE
     username: ${ORACLE_USR}
     password: ${ORACLE_PWD}
     hikari:
       idle-timeout: 10000
       maximum-pool-size: 5
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+
 airline-api:
   openapi:
     dev-url: http://localhost:8080/airline-api
