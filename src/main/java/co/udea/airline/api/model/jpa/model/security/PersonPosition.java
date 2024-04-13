@@ -22,7 +22,7 @@ public class PersonPosition {
 
     @ManyToOne
     @JoinColumn(name = "PERSON_ID")
-    private Person person;
+    private User user;
     
     @ManyToOne
     @JoinColumn(name = "POSITION_ID")

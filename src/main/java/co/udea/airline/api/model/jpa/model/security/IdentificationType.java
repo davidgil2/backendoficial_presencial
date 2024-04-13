@@ -17,7 +17,7 @@ public class IdentificationType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDENTIFICATION_TYPE_ID")
-    private Long identificationTypeId;
+    private int identificationTypeId;
     
     @NotNull
     private String identificationType;
