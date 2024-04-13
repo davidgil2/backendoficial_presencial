@@ -1,7 +1,7 @@
 # Server properties
 server:
   servlet:
-    context-path: /ssmu-api
+    context-path: /sitas
   port: 8080
 # Spring properties
 spring:
