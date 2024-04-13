@@ -20,9 +20,9 @@
 		<java.version>17</java.version>
 		<sonar.organization>codefactory2024-1</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<!-- other properties here compas-->
-		<profile>
-			<id>coverage</id>
+	</properties>
+	<profiles>
+		<profile><id>coverage</id>
 			<build>
 				<plugins>
 					<plugin>
@@ -52,7 +52,7 @@
 				</plugins>
 			</build>
 		</profile>
-	</properties>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
