@@ -9,7 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan({
         "co.udea.airline.api.controller",
-        "co.udea.airline.api.model",
+        "co.udea.airline.api.model.jpa",
+        "co.udea.airline.api.filter",
         "co.udea.airline.api.service",
         "co.udea.airline.api.utils",
 })
