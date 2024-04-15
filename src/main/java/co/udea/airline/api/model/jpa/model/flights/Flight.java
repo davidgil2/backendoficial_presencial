@@ -1,6 +1,5 @@
 package co.udea.airline.api.model.jpa.model.flights;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -40,16 +39,4 @@ public class Flight {
 
     @OneToMany(mappedBy = "flight")
     private Set<Scale> scales;
-
-/*    @Override
-    public String toString() {
-        return "Flight(" +
-                "id=" + id +
-                ", flightNumber=" + flightNumber +
-                ", basePrice=" + basePrice +
-                ", taxPercent=" + taxPercent +
-                ", surcharge=" + surcharge +
-                ", scales= null" +
-                ')';
-    }*/
 }

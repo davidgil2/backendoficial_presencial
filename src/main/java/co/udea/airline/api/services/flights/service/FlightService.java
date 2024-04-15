@@ -27,16 +27,5 @@ public class FlightService {
         }
 
         return flightSaved;
-
-/*        flightRepository.save(flight);
-
-        Set<Scale> scales = flight.getScales();
-        flight.setScales(null);
-        for (Scale scale : scales) {
-            scale.setFlight(flight);
-            scale = scaleService.saveScale(scale);
-        }
-        flight.setScales(scales);
-        return flight;*/
     }
 }
