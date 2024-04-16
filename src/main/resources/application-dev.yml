@@ -35,4 +35,4 @@ airline-api:
 logging:
   level:
     root: debug
-    org.springframework: DEBUG
+    org.springframework: debug

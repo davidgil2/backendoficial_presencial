@@ -1,10 +1,16 @@
 package co.udea.airline.api.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import co.udea.airline.api.model.jpa.model.security.Person;
@@ -18,16 +24,38 @@ public class LoginService {
         PersonRepository personRepository;
 
         @Autowired
+        AuthenticationManager authenticationManager;
+
+        @Autowired
         JwtUtils jwtUtils;
 
-        public Jwt loginUser(Authentication authentication) throws AuthenticationException {
+        public Jwt login(String email, String password) throws AuthenticationException {
 
-                if (authentication.isAuthenticated()) {
-                        Person person = personRepository.findByEmail(authentication.getName()).orElseThrow();
-                        return jwtUtils.createToken(person);
+                Authentication auth = new UsernamePasswordAuthenticationToken(email, password);
+                auth = authenticationManager.authenticate(auth);
+
+                if (auth.isAuthenticated()) {
+                        Optional<Person> p = personRepository.findByEmail(auth.getName());
+                        if (!p.isPresent())
+                                throw new UsernameNotFoundException("User hasn't registerred yet");
+                        return jwtUtils.createToken(p.get());
                 }
                 throw new AuthenticationServiceException(
-                                "cannot authenticate user %s".formatted(authentication.getName()));
+                                "cannot authenticate user %s".formatted(auth.getName()));
+        }
+
+        public Jwt loginWithOauth2(String jwt) {
+
+                Authentication auth = authenticationManager.authenticate(new BearerTokenAuthenticationToken(jwt));
+                if (auth.isAuthenticated()) {
+                        Jwt token = (Jwt) auth.getPrincipal();
+                        Optional<Person> p = personRepository.findByEmail(token.getClaimAsString("email"));
+                        if (!p.isPresent())
+                                throw new UsernameNotFoundException("User hasn't registerred yet");
+                        return jwtUtils.createToken(p.get());
+                }
+                throw new AuthenticationServiceException(
+                                "cannot authenticate user %s".formatted(auth.getName()));
         }
 
 }
