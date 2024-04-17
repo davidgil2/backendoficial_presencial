@@ -37,4 +37,17 @@ public class FlightService {
     public List<Flight> getAllFlights() {
         return flightRepository.findAll();
     }
+
+    public Flight deleteFlightById(Long id) {
+        Flight deletedFlight = getFlightById(id);
+
+        // TODO: Add booking service to validate if the flight has bookings
+
+        if (deletedFlight == null) {
+            return null;
+        }
+
+        flightRepository.deleteById(id);
+        return deletedFlight;
+    }
 }
