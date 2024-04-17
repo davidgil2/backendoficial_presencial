@@ -28,4 +28,8 @@ public class FlightService {
 
         return flightSaved;
     }
+
+    public Flight getFlightById(Long id) {
+        return flightRepository.findById(id).orElse(null);
+    }
 }

@@ -60,12 +60,14 @@ public class FlightController {
         return ResponseEntity.ok(new FlightDTO[0]);
     }
 
-    @Operation(summary = "Returns only one flight by id", description = "Returns only one flight by id")
+    @Operation(summary = "Get a Flight", description = "Returns only one flight by id")
     @GetMapping("/{id}")
-    public ResponseEntity<FlightDTO> getMethodNameById(@PathVariable String id) {
-        // TODO: process GET request
-
-        return ResponseEntity.ok(new FlightDTO());
+    public ResponseEntity<FlightDTO> getMethodNameById(@PathVariable long id) {
+        Flight flight = flightService.getFlightById(id);
+        if (flight == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(modelMapper.map(flight, FlightDTO.class));
     }
 
     @Operation(summary = "Update flight by id", description = "Update flight by id")
