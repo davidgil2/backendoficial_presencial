@@ -26,8 +26,8 @@ spring:
     driver-class-name: oracle.jdbc.driver.OracleDriver
 airline-api:
   openapi:
-    dev-url: http://localhost:8080/airline-api
-    prod-url: https://airline-api.com
+    dev-url: http://localhost:8080/sitas-api
+    prod-url: https://codefact.udea.edu.co/sitas-api
 
 logging:
   level:
