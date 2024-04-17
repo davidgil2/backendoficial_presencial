@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.Valid;
+import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/flights")
@@ -52,12 +54,16 @@ public class FlightController {
         return new ResponseEntity<FlightDTO>(flightResDTO, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Get all flights", description = "Get all flights")
+    @Operation(summary = "Get all flights", description = "Get basic information of all flights")
     @GetMapping("")
-    public ResponseEntity<FlightDTO[]> getMethodName() {
-        // TODO: process GET request
+    public ResponseEntity<List<FlightDTO>> getAllFlights() {
+        // TODO: Add standard response
+        List<Flight> Flight = flightService.getAllFlights();
 
-        return ResponseEntity.ok(new FlightDTO[0]);
+        List<FlightDTO> FlightDTOs = Flight.stream().map(f -> modelMapper.map(f, FlightDTO.class))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(FlightDTOs);
     }
 
     @Operation(summary = "Get a Flight", description = "Returns only one flight by id")

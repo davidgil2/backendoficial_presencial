@@ -6,6 +6,7 @@ import co.udea.airline.api.model.jpa.repository.flights.IFlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -31,5 +32,9 @@ public class FlightService {
 
     public Flight getFlightById(Long id) {
         return flightRepository.findById(id).orElse(null);
+    }
+
+    public List<Flight> getAllFlights() {
+        return flightRepository.findAll();
     }
 }
