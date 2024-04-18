@@ -29,7 +29,7 @@ public class LoginService {
         @Autowired
         JwtUtils jwtUtils;
 
-        public Jwt login(String email, String password) throws AuthenticationException {
+        public Jwt authenticateUser(String email, String password) throws AuthenticationException {
 
                 Authentication auth = new UsernamePasswordAuthenticationToken(email, password);
                 auth = authenticationManager.authenticate(auth);
@@ -44,14 +44,14 @@ public class LoginService {
                                 "cannot authenticate user %s".formatted(auth.getName()));
         }
 
-        public Jwt loginWithOauth2(String jwt) {
+        public Jwt authenticateIdToken(String jwt) {
 
                 Authentication auth = authenticationManager.authenticate(new BearerTokenAuthenticationToken(jwt));
                 if (auth.isAuthenticated()) {
                         Jwt token = (Jwt) auth.getPrincipal();
                         Optional<Person> p = personRepository.findByEmail(token.getClaimAsString("email"));
                         if (!p.isPresent())
-                                throw new UsernameNotFoundException("User hasn't registerred yet");
+                                throw new UsernameNotFoundException("User hasn't registered yet");
                         return jwtUtils.createToken(p.get());
                 }
                 throw new AuthenticationServiceException(

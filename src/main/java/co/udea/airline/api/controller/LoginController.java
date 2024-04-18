@@ -28,7 +28,7 @@ public class LoginController {
     public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequest) {
 
         try {
-            Jwt token = loginService.login(loginRequest.email(), loginRequest.password());
+            Jwt token = loginService.authenticateUser(loginRequest.email(), loginRequest.password());
             return ResponseEntity.ok().body(token.getTokenValue());
         } catch (AuthenticationException exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("incorrect username or password");
@@ -38,7 +38,7 @@ public class LoginController {
     @PostMapping("/login/google")
     public ResponseEntity<String> loginWithOauth2(@RequestBody OAuth2LoginRequestDTO loginRequest) {
         try {
-            Jwt jwt = loginService.loginWithOauth2(loginRequest.idToken());
+            Jwt jwt = loginService.authenticateIdToken(loginRequest.idToken());
             return ResponseEntity.ok().body(jwt.getTokenValue());
         } catch (UsernameNotFoundException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user not found");
