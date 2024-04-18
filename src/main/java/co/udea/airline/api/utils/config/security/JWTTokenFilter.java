@@ -28,7 +28,7 @@ public class JWTTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
+        
         String bearerToken = request.getHeader("Authorization");
 
         if (bearerToken == null || !bearerToken.startsWith("Bearer ")) {
@@ -45,12 +45,12 @@ public class JWTTokenFilter extends OncePerRequestFilter {
                 // this is very important, since it guarantees the user is not authenticated at
                 // all
                 SecurityContextHolder.clearContext();
-                log.debug("Bearer token was rejected: %s".formatted(bearerToken));
+                log.debug("Bearer token was rejected by %s: %s".formatted(this.getClass().toString(), bearerToken));
             }
         }
 
         filterChain.doFilter(request, response);
 
     }
-    
+
 }

@@ -47,7 +47,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(
                 new StandardResponse<>(StandardResponse.StatusStandardResponse.ERROR,
                         "Insufficient permissions to access resource."),
-                HttpStatus.INTERNAL_SERVER_ERROR);
+                HttpStatus.UNAUTHORIZED);
 
     }
 
