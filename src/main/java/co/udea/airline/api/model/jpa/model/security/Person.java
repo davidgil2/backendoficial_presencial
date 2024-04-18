@@ -3,6 +3,7 @@ package co.udea.airline.api.model.jpa.model.security;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -79,19 +80,22 @@ public class Person implements UserDetails {
         return getPositionAssoc().stream().map(posAssoc -> posAssoc.getPosition()).collect(Collectors.toList());
     }
 
+    public Set<Privilege> getPrivileges() {
+        return getPositions().stream()
+                .map(pos -> pos.getPrivileges())
+                .flatMap(List::stream)
+                .collect(Collectors.toSet());
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // prefix all roles with 'ROLE_' and uppercase them
-        List<GrantedAuthority> authorities = getPositions().stream()
+        Set<GrantedAuthority> authorities = getPositions().stream()
                 .map(pos -> new SimpleGrantedAuthority("ROLE_".concat(pos.getName().toUpperCase())))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
         // add all privleges
-        authorities.addAll(
-                getPositions().stream()
-                        .map(pos -> pos.getPrivileges())
-                        .flatMap(List::stream)
-                        .collect(Collectors.toList()));
+        authorities.addAll(getPrivileges());
 
         return authorities;
     }

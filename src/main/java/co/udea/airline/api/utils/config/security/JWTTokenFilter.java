@@ -38,7 +38,7 @@ public class JWTTokenFilter extends OncePerRequestFilter {
             try {
                 Jwt jwt = jwtUtils.getToken(bearerToken.substring("Bearer ".length()));
                 jwtUtils.validateToken(jwt);
-                Authentication auth = new JwtAuthenticationToken(jwt);
+                Authentication auth = new JwtAuthenticationToken(jwt, jwtUtils.getAuthorities(jwt));
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
             } catch (JwtException e) {
