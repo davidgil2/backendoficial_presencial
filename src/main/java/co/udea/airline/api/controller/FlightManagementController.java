@@ -5,7 +5,6 @@ import co.udea.airline.api.model.jpa.model.flightbmodel.DTO.FlightDTO;
 
 import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightDetailsProjection;
 import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightProjection;
-import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightsRepository;
 import co.udea.airline.api.services.flightsservices.FlightServices;
 import co.udea.airline.api.model.jpa.model.flightbmodel.Flight;
 
@@ -26,7 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/flights")
-@Tag(name = "Flight Management", description = "Add, delete and update flights")
+@Tag(name = "Flight Management", description = "Flight management operations")
 public class FlightManagementController {
 
     @Autowired
@@ -79,6 +78,12 @@ public class FlightManagementController {
      * @return FlightDTO object with the saved flight information
      */
     @PostMapping("/add")
+    @Operation(summary = "Add a new flight")
+    @ApiResponse(responseCode = "200", content = {
+            @Content(schema = @Schema(implementation = Flight.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+    }, description = "Flight added successfully")
+    @ApiResponse(responseCode = "400", description = "Invalid request")
+    @ApiResponse(responseCode = "500", description = "Internal error")
     public FlightDTO addFlight(@RequestBody FlightDTO flight) {
         Flight transformedFlight = modelMapper.map(flight, Flight.class);
         Flight savedFlight = flightService.addFlight(transformedFlight);

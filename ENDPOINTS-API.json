@@ -1,0 +1,10 @@
+{
+  "swagger-ui": "http://localhost:8080/ssmu-api/swagger-ui/index.html",
+
+  "Flights": {
+    "POST": "http://localhost:8080/ssmu-api/v1/flights/add",
+    "GET": "http://localhost:8080/ssmu-api/v1/flights/search",
+    "GET": "http://localhost:8080/ssmu-api/v1/flights/searchflight",
+    "GET:flightNumber": "http://localhost:8080/ssmu-api/v1/flights/searchdetails?flightNumber="
+  }
+}
