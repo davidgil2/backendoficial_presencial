@@ -1,15 +1,15 @@
 package co.udea.airline.api.model.jpa.model.security;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
 @Data
@@ -21,18 +21,14 @@ public class Position { // == Role
     @Column(name = "POSITION_ID")
     private Long positionId;
 
-    @Column(name = "POSITION_NAME")
+    @Column
     private String name;
 
-    @Column(name = "DETAIL")
-    private String detail;
+    @Column
+    private String description;
 
-    @OneToMany(mappedBy = "position", fetch = FetchType.EAGER)
-    private List<PositionPrivilege> privilegeAssoc;
-
-    public List<Privilege> getPrivileges() {
-        return getPrivilegeAssoc().stream()
-                .map(privAssoc -> privAssoc.getPrivilege()).collect(Collectors.toList());
-    }
+    @ManyToMany
+    @JoinTable(name = "POSITION_PRIVILEGE", joinColumns = @JoinColumn(name = "POSITION_ID"), inverseJoinColumns = @JoinColumn(name = "PRIVILEGE_ID"))
+    private List<Privilege> privileges;
 
 }

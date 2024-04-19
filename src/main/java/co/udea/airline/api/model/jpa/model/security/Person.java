@@ -17,7 +17,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -48,6 +49,7 @@ public class Person implements UserDetails {
     @Column(name = "IDENTIFICATION_NUMBER")
     private String identificationNumber;
 
+    @NotBlank
     @Column(name = "FIRST_NAME")
     private String firstName;
 
@@ -65,21 +67,27 @@ public class Person implements UserDetails {
     private String country;
     private String province;
     private String city;
-    private String residence;
+    private String address;
 
     @Email
+    @NotBlank
     private String email;
 
-    @NotBlank
-    @Column(name = "ACCESS_KEY")
     private String password;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
-    private List<PersonPosition> positionAssoc;
+    @Column(name = "EXTERNAL_LOGIN_SOURCE")
+    private String externalLoginSource;
 
-    public List<Position> getPositions() {
-        return getPositionAssoc().stream().map(posAssoc -> posAssoc.getPosition()).collect(Collectors.toList());
-    }
+    private Boolean enabled;
+
+    private Boolean verified;
+
+    @Column(name = "FAILED_LOGIN_ATTEMPTS")
+    private Integer failedLoginAttempts;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "PERSON_POSITION", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "POSITION_ID"))
+    private List<Position> positions;
 
     public Set<Privilege> getPrivileges() {
         return getPositions().stream()
@@ -106,8 +114,6 @@ public class Person implements UserDetails {
         return getEmail();
     }
 
-    // TODO: implement in the db all of the below methods
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -115,7 +121,7 @@ public class Person implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return enabled;
     }
 
     @Override
@@ -125,7 +131,7 @@ public class Person implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
 }

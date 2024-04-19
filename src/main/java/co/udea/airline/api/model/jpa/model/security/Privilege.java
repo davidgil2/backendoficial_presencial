@@ -17,12 +17,10 @@ public class Privilege implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PRIVILEGE_ID")
     private Long privilegeId;
-
-    @Column(name = "PRIVILEGE_NAME")
+    
     private String name;
-
-    @Column(name = "DETAIL")
-    private String detail;
+    
+    private String description;
 
     @Override
     public String getAuthority() {

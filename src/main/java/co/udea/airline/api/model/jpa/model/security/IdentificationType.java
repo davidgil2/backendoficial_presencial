@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "IDENTIFICATIONTYPE")
+@Table(name = "IDENTIFICATION_TYPE")
 public class IdentificationType {
 
     @Id
@@ -23,7 +23,7 @@ public class IdentificationType {
     @Column(name = "IDENTIFICATION_TYPE_ID")
     private Long identificationTypeId;
 
-    @NotNull
+    @NotBlank
     private String identificationType;
 
 }
