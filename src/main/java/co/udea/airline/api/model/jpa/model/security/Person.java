@@ -59,7 +59,7 @@ public class Person implements UserDetails {
     private String city;
     @Column(name = "RESIDENCE")
     private String residence;
-
+    @NotBlank
     @Email
     private String email;
 

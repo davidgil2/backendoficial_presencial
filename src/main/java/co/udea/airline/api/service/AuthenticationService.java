@@ -56,7 +56,7 @@ public class AuthenticationService {
         user.setCountry(request.country());
         user.setPhoneNumber(request.phoneNumber());
         user.setGenre(request.genre());
-        user.setRoles(positionRepository.findByName(request.roles().toString()));
+        user.setRoles(positionRepository.findByName("USER"));
 
         user = repository.save(user);
 
