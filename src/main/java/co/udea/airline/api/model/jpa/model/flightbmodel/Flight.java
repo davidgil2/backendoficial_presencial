@@ -14,12 +14,11 @@ import java.util.Set;
 /**
  * Represents a flight in the airline system.
  */
-@Data
 @Getter
 @Setter
 @RequiredArgsConstructor
 @Entity
-@Table(name = "flight", schema = "Code_factory")
+@Table(name = "flight", schema = "Code_factory2")
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +26,7 @@ public class Flight {
     private Long id;
 
     @NotNull
-    @Column(name = "flight_number", nullable = false)
+    @Column(name = "flight_number", nullable = false, unique = true, updatable = true, length = 8)
     private String flightNumber;
 
     @NotNull
@@ -42,7 +41,11 @@ public class Flight {
     @Column(name = "surcharge", nullable = false)
     private double surcharge;
 
-    @OneToMany(mappedBy = "flight")
-    private Set<Scale> scales = new HashSet<Scale>();
+    @OneToMany( fetch = FetchType.EAGER,mappedBy = "flight" )
+    private Set<Scale> scales;
+
+
+    @Column(name = "flight_type")
+    private String flightType;
 
 }
