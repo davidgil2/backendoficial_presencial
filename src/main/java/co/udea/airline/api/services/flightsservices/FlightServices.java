@@ -5,6 +5,8 @@ package co.udea.airline.api.services.flightsservices;
 import co.udea.airline.api.model.jpa.model.flightbmodel.Flight;
 import co.udea.airline.api.model.jpa.model.flightbmodel.Scale;
 
+import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightDetailsProjection;
+import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightProjection;
 import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightsRepository;
 
 
@@ -19,6 +21,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Service
 public class FlightServices {
 
@@ -31,11 +35,19 @@ public class FlightServices {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private IFlightDetailsProjection flightDetailsProjection;
     public List<Flight> searchFlights() {
         return flightRepository.findAll();
     }
+    public List<IFlightProjection> searchFlightGeneral() {
+        return flightRepository.findAllFlightGeneral();
+    }
 
-
+    public List<IFlightDetailsProjection> searchFlightDetailsByFlightNumber(String flightNumber) {
+        return flightRepository.findFlightDetailsByFlightNumber(flightNumber);
+    }
     public Flight addFlight(Flight flight) {
         Flight savedFlight = null;
         try {
@@ -44,7 +56,7 @@ public class FlightServices {
             if (scales != null && !scales.isEmpty()) {
                 for (Scale scale : scales) {
                     scale.setFlight(savedFlight);
-                    scale = scaleServices.saveScale(scale);
+                    scaleServices.saveScale(scale);
                 }
                 savedFlight.setScales(scales);
             }
