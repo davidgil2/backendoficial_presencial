@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Setter
 @RequiredArgsConstructor
 @Entity
-@Table(name = "AirplaneModel", schema = "Code_factory")
+@Table(name = "AirplaneModel", schema = "Code_factory2")
 public class AirplaneModel implements Serializable {
     @Id
     @Column(name = "airplane_model", nullable = false, unique = true, updatable = true, length = 15)

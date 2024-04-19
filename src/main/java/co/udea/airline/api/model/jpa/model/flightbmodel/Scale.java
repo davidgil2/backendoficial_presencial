@@ -16,19 +16,19 @@ import java.time.LocalDateTime;
  * Represents a scale in an airline system.
  * A scale is a stopover between the origin and destination airports during a flight.
  */
-@Data
+
 @Getter
 @Setter
 @RequiredArgsConstructor
 @Entity
-@Table(name = "Scale", schema = "Code_factory")
+@Table(name = "Scale", schema = "Code_factory2")
 public class Scale {
       @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "scale_id", updatable = false, nullable = false)
         private Long id;
 
-        @ManyToOne(cascade = CascadeType.ALL)
+        @ManyToOne( cascade = CascadeType.ALL)
         @JoinColumn(name = "flight_id")
         private Flight flight;
 
