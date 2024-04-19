@@ -96,8 +96,6 @@ public class Person implements UserDetails {
         return authorities;
     }
 
-    @OneToMany(mappedBy = "person")
-    private List<Token> tokens;
 
     public IdentificationType getIdentificationType() {
         return identificationType;
@@ -193,13 +191,6 @@ public class Person implements UserDetails {
         this.password = password;
     }
 
-    public List<Token> getTokens() {
-        return tokens;
-    }
-
-    public void setTokens(List<Token> tokens) {
-        this.tokens = tokens;
-    }
 
     public Character getGenre() {
         return genre;

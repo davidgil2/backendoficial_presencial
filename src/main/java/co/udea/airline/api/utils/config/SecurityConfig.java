@@ -25,14 +25,11 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    private final CustomLogoutHandler logoutHandler;
 
     public SecurityConfig(UserDetailsServiceImp userDetailsServiceImp,
-                          JwtAuthenticationFilter jwtAuthenticationFilter,
-                          CustomLogoutHandler logoutHandler) {
+                          JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.userDetailsServiceImp = userDetailsServiceImp;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.logoutHandler = logoutHandler;
     }
 
     @Bean
@@ -57,7 +54,6 @@ public class SecurityConfig {
                                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .logout(l->l
                         .logoutUrl("/logout")
-                        .addLogoutHandler(logoutHandler)
                         .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()
                         ))
                 .build();
