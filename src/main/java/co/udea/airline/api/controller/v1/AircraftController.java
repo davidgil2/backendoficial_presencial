@@ -1,4 +1,4 @@
-package co.udea.airline.api.controller;
+package co.udea.airline.api.controller.v1;
 
 import co.udea.airline.api.model.jpa.model.vehicles.Aircraft;
 import co.udea.airline.api.services.vehicles.service.AircraftService;

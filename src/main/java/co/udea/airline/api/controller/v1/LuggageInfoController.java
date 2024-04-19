@@ -1,4 +1,4 @@
-package co.udea.airline.api.controller;
+package co.udea.airline.api.controller.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +12,7 @@ import co.udea.airline.api.services.luggageinfo.service.ILugaggeInfoService;
 public class LuggageInfoController {
     @Autowired
     private ILugaggeInfoService service;
-    @PostMapping("/addLuggageInfo")
+    @PostMapping("/v1/luggage-info/add-luggage-info")
     public LuggageInfo addLuggageInfo(@RequestBody LuggageInfo luggageInfo){
         return service.saveLuggageInfo(luggageInfo);
     }

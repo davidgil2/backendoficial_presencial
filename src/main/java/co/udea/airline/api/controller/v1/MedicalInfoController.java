@@ -1,4 +1,4 @@
-package co.udea.airline.api.controller;
+package co.udea.airline.api.controller.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +12,7 @@ import co.udea.airline.api.services.medicalinfo.service.IMedicalInfoService;
 public class MedicalInfoController {
     @Autowired
     private IMedicalInfoService service;
-    @PostMapping("/addMedicalInfo")
+    @PostMapping("/v1/medical-info/add-medical-info")
     public MedicalInfo addMedicalInfo(@RequestBody MedicalInfo medicalInfo){
         return service.saveMedicalInfo(medicalInfo);
     }

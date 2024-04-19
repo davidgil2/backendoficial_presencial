@@ -5,13 +5,13 @@ FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
 
 # Copy the Maven project definition
-COPY pom.xml .
+COPY ../pom.xml .
 
 # Resolve dependencies and cache them
 RUN mvn dependency:go-offline
 
 # Copy the application source code
-COPY src ./src
+COPY ../src ./src
 
 # Build the application
 RUN mvn package -DskipTests
@@ -29,7 +29,4 @@ COPY --from=build /app/target/airline-api-0.0.1-SNAPSHOT.jar .
 EXPOSE 8080
 
 # Delay the start of the application by 60 seconds
-CMD ["sh", "-c", "sleep 50 && java -jar airline-api-0.0.1-SNAPSHOT.jar"]
-
-
-
+CMD ["java", "-jar", "airline-api-0.0.1-SNAPSHOT.jar"]
