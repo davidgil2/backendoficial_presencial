@@ -1,25 +1,33 @@
 package co.udea.airline.api.model.jpa.model.security;
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
-@Table(name = "PERSON")
-public class User implements UserDetails {
+@Table(name="PERSON")
+public class Person implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PERSON_ID") // TODO: create name conversion strategy
-    private Integer id;
+    private Integer personId;
 
     @OneToOne
     @NotNull
@@ -43,10 +51,13 @@ public class User implements UserDetails {
 
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
-
+    @Column(name = "COUNTRY")
     private String country;
+    @Column(name = "PROVINCE")
     private String province;
+    @Column(name = "CITY")
     private String city;
+    @Column(name = "RESIDENCE")
     private String residence;
 
     @Email
@@ -55,12 +66,37 @@ public class User implements UserDetails {
     @NotBlank
     @Column(name = "ACCESS_KEY")
     private String password;
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+    private List<PersonPosition> positionAssoc;
 
-    @Enumerated(value = EnumType.STRING)
-    private Role role;
+    @ManyToMany
+    @JoinTable(name = "PERSONPOSITION", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "POSITION_ID")) // TODO: test what happens when saving a person
+    private List<Position> roles;
+   public List<Position> getPositions() {
+        return getPositionAssoc().stream().map(posAssoc -> posAssoc.getPosition()).collect(Collectors.toList());
+    }
 
+    public Set<Privilege> getPrivileges() {
+        return getPositions().stream()
+                .map(pos -> pos.getPrivileges())
+                .flatMap(List::stream)
+                .collect(Collectors.toSet());
+    }
 
-    @OneToMany(mappedBy = "user")
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // prefix all roles with 'ROLE_' and uppercase them
+        Set<GrantedAuthority> authorities = getPositions().stream()
+                .map(pos -> new SimpleGrantedAuthority("ROLE_".concat(pos.getName().toUpperCase())))
+                .collect(Collectors.toSet());
+
+        // add all privleges
+        authorities.addAll(getPrivileges());
+
+        return authorities;
+    }
+
+    @OneToMany(mappedBy = "person")
     private List<Token> tokens;
 
     public IdentificationType getIdentificationType() {
@@ -79,12 +115,28 @@ public class User implements UserDetails {
         this.identificationNumber = identificationNumber;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getPersonId() {
+        return personId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public List<PersonPosition> getPositionAssoc() {
+        return positionAssoc;
+    }
+
+    public void setPositionAssoc(List<PersonPosition> positionAssoc) {
+        this.positionAssoc = positionAssoc;
+    }
+
+    public List<Position> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Position> roles) {
+        this.roles = roles;
+    }
+
+    public void setPersonId(Integer id) {
+        this.personId = id;
     }
 
     public String getFirstName() {
@@ -132,9 +184,6 @@ public class User implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
-    }
 
     public String getPassword() {
         return password;
@@ -142,14 +191,6 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public List<Token> getTokens() {

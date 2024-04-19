@@ -1,6 +1,6 @@
 package co.udea.airline.api.service;
 
-import co.udea.airline.api.model.jpa.model.security.User;
+import co.udea.airline.api.model.jpa.model.security.Person;
 import co.udea.airline.api.model.jpa.repository.security.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -62,12 +62,12 @@ public class JwtService {
     }
 
 
-    public String generateToken(User user) {
+    public String generateToken(Person user) {
         String token = Jwts
                 .builder()
                 .subject(user.getEmail())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 24*60*60*1000 ))
+                .expiration(new Date(System.currentTimeMillis() + 24*60*60*1000 ))//24 horas
                 .signWith(getSigninKey())
                 .compact();
 

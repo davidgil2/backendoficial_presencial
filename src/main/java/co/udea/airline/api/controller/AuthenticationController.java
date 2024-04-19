@@ -1,7 +1,7 @@
 package co.udea.airline.api.controller;
 
 import co.udea.airline.api.model.jpa.model.security.AuthenticationResponse;
-import co.udea.airline.api.model.jpa.model.security.User;
+import co.udea.airline.api.model.jpa.model.security.Person;
 import co.udea.airline.api.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,14 +20,14 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody User request
+            @RequestBody Person request
             ) {
         return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
-            @RequestBody User request
+            @RequestBody Person request
     ) {
         return ResponseEntity.ok(authService.authenticate(request));
     }

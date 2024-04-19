@@ -20,7 +20,7 @@ public class Token {
 
     @ManyToOne
     @JoinColumn(name = "PERSON_ID")
-    private User user;
+    private Person person;
 
     public Integer getId() {
         return id;
@@ -46,11 +46,11 @@ public class Token {
         this.loggedOut = loggedOut;
     }
 
-    public User getUser() {
-        return user;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPerson(Person user) {
+        this.person = user;
     }
 }

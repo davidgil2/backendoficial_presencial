@@ -1,7 +1,9 @@
 package co.udea.airline.api.model.jpa.model.security;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,10 +24,12 @@ public class PersonPosition {
 
     @ManyToOne
     @JoinColumn(name = "PERSON_ID")
-    private User user;
-    
-    @ManyToOne
+    @JsonIgnore
+    private Person person;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "POSITION_ID")
+    @JsonIgnore
     private Position position;
 
 }

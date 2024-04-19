@@ -2,7 +2,7 @@ package co.udea.airline.api.service;
 
 import co.udea.airline.api.model.jpa.model.security.AuthenticationResponse;
 import co.udea.airline.api.model.jpa.model.security.Token;
-import co.udea.airline.api.model.jpa.model.security.User;
+import co.udea.airline.api.model.jpa.model.security.Person;
 import co.udea.airline.api.model.jpa.repository.security.TokenRepository;
 import co.udea.airline.api.model.jpa.repository.security.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,22 +35,25 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse register(User request) {
+    public AuthenticationResponse register(Person request) {
 
         // check if user already exist. if exist than authenticate the user
         if(repository.findByEmail(request.getEmail()).isPresent()) {
             return new AuthenticationResponse(null, "User already exist");
         }
 
-        User user = new User();
+        Person user = new Person();
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setIdentificationNumber(request.getIdentificationNumber());
         user.setIdentificationType(request.getIdentificationType());
-
-        user.setRole(request.getRole());
+        user.setCity(request.getCity());
+        user.setCountry(request.getCountry());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setGenre(request.getGenre());
+        user.setRoles(request.getRoles());
 
         user = repository.save(user);
 
@@ -62,7 +65,7 @@ public class AuthenticationService {
 
     }
 
-    public AuthenticationResponse authenticate(User request) {
+    public AuthenticationResponse authenticate(Person request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -70,7 +73,7 @@ public class AuthenticationService {
                 )
         );
 
-        User user = repository.findByEmail(request.getUsername()).orElseThrow();
+        Person user = repository.findByEmail(request.getUsername()).orElseThrow();
         String jwt = jwtService.generateToken(user);
 
         revokeAllTokenByUser(user);
@@ -79,8 +82,8 @@ public class AuthenticationService {
         return new AuthenticationResponse(jwt, "User login was successful");
 
     }
-    private void revokeAllTokenByUser(User user) {
-        List<Token> validTokens = tokenRepository.findAllTokensByUser(user.getId());
+    private void revokeAllTokenByUser(Person user) {
+        List<Token> validTokens = tokenRepository.findAllTokensByUser(user.getPersonId());
         if(validTokens.isEmpty()) {
             return;
         }
@@ -91,11 +94,11 @@ public class AuthenticationService {
 
         tokenRepository.saveAll(validTokens);
     }
-    private void saveUserToken(String jwt, User user) {
+    private void saveUserToken(String jwt, Person user) {
         Token token = new Token();
         token.setToken(jwt);
         token.setLoggedOut(false);
-        token.setUser(user);
+        token.setPerson(user);
         tokenRepository.save(token);
     }
 }
