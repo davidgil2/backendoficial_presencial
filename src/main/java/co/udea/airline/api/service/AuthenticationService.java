@@ -1,10 +1,13 @@
 package co.udea.airline.api.service;
 
+import co.udea.airline.api.dto.RegisterRequestDTO;
 import co.udea.airline.api.model.jpa.model.security.AuthenticationResponse;
 import co.udea.airline.api.model.jpa.model.security.Token;
 import co.udea.airline.api.model.jpa.model.security.Person;
 import co.udea.airline.api.model.jpa.repository.security.TokenRepository;
 import co.udea.airline.api.model.jpa.repository.security.UserRepository;
+import co.udea.airline.api.model.jpa.repository.security.IdentificationTypeRepository;
+import co.udea.airline.api.model.jpa.repository.security.PositionRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,40 +23,44 @@ public class AuthenticationService {
     private final JwtService jwtService;
 
     private final TokenRepository tokenRepository;
-
+    private final IdentificationTypeRepository idRepository;
+    private final PositionRepository positionRepository;
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationService(UserRepository repository,
                                  PasswordEncoder passwordEncoder,
                                  JwtService jwtService,
-                                 TokenRepository tokenRepository,
+                                 TokenRepository tokenRepository, IdentificationTypeRepository idRepository,
+                                 PositionRepository positionRepository,
                                  AuthenticationManager authenticationManager) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.tokenRepository = tokenRepository;
+        this.idRepository = idRepository;
+        this.positionRepository = positionRepository;
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse register(Person request) {
+    public AuthenticationResponse register(RegisterRequestDTO request) {
 
         // check if user already exist. if exist than authenticate the user
-        if(repository.findByEmail(request.getEmail()).isPresent()) {
+        if(repository.findByEmail(request.email()).isPresent()) {
             return new AuthenticationResponse(null, "User already exist");
         }
 
         Person user = new Person();
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setEmail(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setIdentificationNumber(request.getIdentificationNumber());
-        user.setIdentificationType(request.getIdentificationType());
-        user.setCity(request.getCity());
-        user.setCountry(request.getCountry());
-        user.setPhoneNumber(request.getPhoneNumber());
-        user.setGenre(request.getGenre());
-        user.setRoles(request.getRoles());
+        user.setFirstName(request.firstName());
+        user.setLastName(request.lastName());
+        user.setEmail(request.email());
+        user.setPassword(passwordEncoder.encode(request.password()));
+        user.setIdentificationNumber(request.idNumber());
+        user.setIdentificationType(idRepository.findByIdentificationType(request.idType()));
+        user.setCity(request.city());
+        user.setCountry(request.country());
+        user.setPhoneNumber(request.phoneNumber());
+        user.setGenre(request.genre());
+        user.setRoles(positionRepository.findByName(request.roles().toString()));
 
         user = repository.save(user);
 

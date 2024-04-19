@@ -1,5 +1,6 @@
 package co.udea.airline.api.controller;
 
+import co.udea.airline.api.dto.RegisterRequestDTO;
 import co.udea.airline.api.model.jpa.model.security.AuthenticationResponse;
 import co.udea.airline.api.model.jpa.model.security.Person;
 import co.udea.airline.api.service.AuthenticationService;
@@ -20,7 +21,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody Person request
+            @RequestBody RegisterRequestDTO request
             ) {
         return ResponseEntity.ok(authService.register(request));
     }
