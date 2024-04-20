@@ -14,7 +14,6 @@ import org.springframework.context.annotation.ComponentScan;
         "co.udea.airline.api.service",
         "co.udea.airline.api.utils",
 })
-
 public class AirlineApiApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

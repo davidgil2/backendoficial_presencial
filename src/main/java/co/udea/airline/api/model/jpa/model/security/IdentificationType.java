@@ -6,19 +6,24 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "IDENTIFICATIONTYPE")
+@Table(name = "IDENTIFICATION_TYPE")
 public class IdentificationType {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IDENTIFICATION_TYPE_ID")
-    private int identificationTypeId;
-    
-    @NotNull
+    private Long identificationTypeId;
+
+    @NotBlank
     private String identificationType;
+
 }

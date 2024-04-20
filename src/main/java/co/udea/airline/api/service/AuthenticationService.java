@@ -3,7 +3,7 @@ package co.udea.airline.api.service;
 import co.udea.airline.api.dto.RegisterRequestDTO;
 import co.udea.airline.api.model.jpa.model.security.AuthenticationResponse;
 import co.udea.airline.api.model.jpa.model.security.Person;
-import co.udea.airline.api.model.jpa.repository.security.UserRepository;
+import co.udea.airline.api.model.jpa.repository.security.PersonRepository;
 import co.udea.airline.api.model.jpa.repository.security.IdentificationTypeRepository;
 import co.udea.airline.api.model.jpa.repository.security.PositionRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,12 +11,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class AuthenticationService {
 
-    private final UserRepository repository;
+    private final PersonRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
@@ -24,7 +22,7 @@ public class AuthenticationService {
     private final PositionRepository positionRepository;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationService(UserRepository repository,
+    public AuthenticationService(PersonRepository repository,
                                  PasswordEncoder passwordEncoder,
                                  JwtService jwtService,
                                  IdentificationTypeRepository idRepository,
@@ -56,7 +54,7 @@ public class AuthenticationService {
         user.setCountry(request.country());
         user.setPhoneNumber(request.phoneNumber());
         user.setGenre(request.genre());
-        user.setRoles(positionRepository.findByName("USER"));
+        user.setPositions(positionRepository.findByName("USER"));
 
         user = repository.save(user);
 

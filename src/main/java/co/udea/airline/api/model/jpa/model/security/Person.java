@@ -1,13 +1,16 @@
 package co.udea.airline.api.model.jpa.model.security;
+
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +26,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name="PERSON")
 public class Person implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PERSON_ID") // TODO: create name conversion strategy
@@ -58,7 +60,7 @@ public class Person implements UserDetails {
     @Column(name = "CITY")
     private String city;
     @Column(name = "RESIDENCE")
-    private String residence;
+    private String address;
     @NotBlank
     @Email
     private String email;
@@ -66,15 +68,20 @@ public class Person implements UserDetails {
     @NotBlank
     @Column(name = "ACCESS_KEY")
     private String password;
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
-    private List<PersonPosition> positionAssoc;
 
-    @ManyToMany
-    @JoinTable(name = "PERSONPOSITION", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "POSITION_ID")) // TODO: test what happens when saving a person
-    private List<Position> roles;
-   public List<Position> getPositions() {
-        return getPositionAssoc().stream().map(posAssoc -> posAssoc.getPosition()).collect(Collectors.toList());
-    }
+    @Column(name = "EXTERNAL_LOGIN_SOURCE")
+    private String externalLoginSource;
+
+    private Boolean enabled;
+
+    private Boolean verified;
+
+    @Column(name = "FAILED_LOGIN_ATTEMPTS")
+    private Integer failedLoginAttempts;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "PERSON_POSITION", joinColumns = @JoinColumn(name = "PERSON_ID"), inverseJoinColumns = @JoinColumn(name = "POSITION_ID"))
+    private List<Position> positions;
 
     public Set<Privilege> getPrivileges() {
         return getPositions().stream()
@@ -96,65 +103,9 @@ public class Person implements UserDetails {
         return authorities;
     }
 
-
-    public IdentificationType getIdentificationType() {
-        return identificationType;
-    }
-
-    public void setIdentificationType(IdentificationType identificationType) {
-        this.identificationType = identificationType;
-    }
-
-    public String getIdentificationNumber() {
-        return identificationNumber;
-    }
-
-    public void setIdentificationNumber(String identificationNumber) {
-        this.identificationNumber = identificationNumber;
-    }
-
-    public Integer getPersonId() {
-        return personId;
-    }
-
-    public List<PersonPosition> getPositionAssoc() {
-        return positionAssoc;
-    }
-
-    public void setPositionAssoc(List<PersonPosition> positionAssoc) {
-        this.positionAssoc = positionAssoc;
-    }
-
-    public List<Position> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Position> roles) {
-        this.roles = roles;
-    }
-
-    public void setPersonId(Integer id) {
-        this.personId = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
+    @Override
     public String getUsername() {
-        return email;
+        return getEmail();
     }
 
     @Override
@@ -164,7 +115,7 @@ public class Person implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return enabled;
     }
 
     @Override
@@ -174,81 +125,7 @@ public class Person implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-    public Character getGenre() {
-        return genre;
-    }
-
-    public void setGenre(Character genre) {
-        this.genre = genre;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getResidence() {
-        return residence;
-    }
-
-    public void setResidence(String residence) {
-        this.residence = residence;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 }
