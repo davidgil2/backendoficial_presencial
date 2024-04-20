@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/v1/person")
 public class PersonController {
     @Autowired
     private PersonService personService;
@@ -23,7 +23,7 @@ public class PersonController {
         return personService.getPerson(personId);
     }
 
-    @PostMapping
+    @PostMapping("person")
     public void savePerson(@RequestBody Person person) {
         personService.saveOrUpdate(person);
     }
