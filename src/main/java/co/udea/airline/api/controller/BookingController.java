@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/booking")
+@RequestMapping("/v1/booking")
 public class BookingController {
     @Autowired
     private BookingService bookingService;
@@ -24,7 +24,7 @@ public class BookingController {
         return bookingService.getBooking(bookingId);
     }
 
-    @PostMapping
+    @PostMapping("/booking")
     public void saveBooking(@RequestBody Booking booking) {
         bookingService.saveOrUpdate(booking);
     }
