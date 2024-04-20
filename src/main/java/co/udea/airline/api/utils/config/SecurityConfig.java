@@ -1,6 +1,5 @@
 package co.udea.airline.api.utils.config;
-
-import co.udea.airline.api.filter.JwtAuthenticationFilter;
+import co.udea.airline.api.filter.JWTTokenFilter;
 import co.udea.airline.api.service.UserDetailsServiceImp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,11 +22,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final UserDetailsServiceImp userDetailsServiceImp;
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JWTTokenFilter jwtAuthenticationFilter;
 
 
     public SecurityConfig(UserDetailsServiceImp userDetailsServiceImp,
-                          JwtAuthenticationFilter jwtAuthenticationFilter) {
+                          JWTTokenFilter jwtAuthenticationFilter) {
         this.userDetailsServiceImp = userDetailsServiceImp;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
@@ -65,8 +64,5 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+
 }

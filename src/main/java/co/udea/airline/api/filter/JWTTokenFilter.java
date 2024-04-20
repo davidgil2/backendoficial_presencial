@@ -1,4 +1,4 @@
-package co.udea.airline.api.utils.config.security;
+package co.udea.airline.api.filter;
 
 import java.io.IOException;
 
