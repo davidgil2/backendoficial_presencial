@@ -19,8 +19,8 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     #url: jdbc:oracle:thin://localhost:1521/airline-dev?serverTimezone=America/Bogota
     url : jdbc:oracle:thin:@localhost:1521/ORCLCDB
-    username: Code_factory
-    password: codefactory123
+    username: CODE_FACTORY
+    password: CODEFACTORY123
     hikari:
       idle-timeout: 10000
       maximum-pool-size: 5
