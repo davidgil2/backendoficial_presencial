@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -25,20 +22,20 @@ public class FlightService {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
-
             if(inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
                 return Arrays.asList(
-                        Arrays.stream(flights)
-                                .filter(flight -> isDateInRange(flight.getDepartureDate(), startDate, endDate))
-                                .collect(Collectors.toList()));
-            } else {
-                return null;
+                    Arrays.stream(flights)
+                        .filter(flight -> isDateInRange(flight.getDepartureDate(), startDate, endDate))
+                        .toList()); // Utilizar toList() en lugar de Collectors.toList()
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error leyendo el archivo JSON ", e);
+            e.printStackTrace();
         }
+        return new ArrayList<>(); // Devolver una lista vacía si hay una excepción o si inputStream es nulo
     }
+
+
 
     private boolean isDateInRange(LocalDate dateToCheck, LocalDate startDate, LocalDate endDate) {
         // Verifica si la fecha está en el rango correcto
