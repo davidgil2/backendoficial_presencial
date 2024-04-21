@@ -24,7 +24,7 @@ public class FlightService {
     public List<List<Flight>> searchFlightsByDate(LocalDate startDate, LocalDate endDate) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("flights.json");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
 
             if(inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
@@ -48,7 +48,7 @@ public class FlightService {
     public List<List<Flight>> searchFlightsByTotalCost(int startCost, int endCost) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("flights.json");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
 
             if(inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
@@ -74,7 +74,7 @@ public class FlightService {
     public List<List<Flight>> searchFlightsByRoute(String origin, String destination) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("flights.json");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
 
             if(inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
@@ -98,7 +98,7 @@ public class FlightService {
     public List<List<Flight>> searchFlightsByAirline(String airline) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("flights.json");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
 
             if(inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
@@ -122,7 +122,7 @@ public class FlightService {
     public Price searchPriceById(int id) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("flights.json");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
 
             if (inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
