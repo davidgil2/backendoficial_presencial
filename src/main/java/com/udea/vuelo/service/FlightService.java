@@ -43,27 +43,27 @@ public class FlightService {
         return !dateToCheck.isBefore(startDate) && !dateToCheck.isAfter(endDate);
     }
 
-    public List<List<Flight>> searchFlightsByTotalCost(int startCost, int endCost) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
+   public List<List<Flight>> searchFlightsByTotalCost(int startCost, int endCost) {
+       try {
+           ObjectMapper objectMapper = new ObjectMapper();
+           InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
 
-            if(inputStream != null) {
-                Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
-                return Arrays.stream(flights)
-                        .filter(flight -> isCostInRange(flight.getPrice().getTotalCost(), startCost, endCost))
-                        .collect(Collectors.groupingBy(Flight::getAirline))
-                        .values()
-                        .stream()
-                        .map(flightList -> flightList.stream().sorted(Comparator.comparingInt(flight -> flight.getPrice().getTotalCost())).toList())
-                        .collect(Collectors.toList());
-            } else {
-                return null;
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Error leyendo el archivo JSON ", e);
-        }
-    }
+           if (inputStream != null) {
+               Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
+               return Arrays.stream(flights)
+                       .filter(flight -> isCostInRange(flight.getPrice().getTotalCost(), startCost, endCost))
+                       .collect(Collectors.groupingBy(Flight::getAirline))
+                       .values()
+                       .stream()
+                       .map(flightList -> flightList.stream().sorted(Comparator.comparingInt(flight -> flight.getPrice().getTotalCost())).toList())
+                       .toList();
+           } else {
+               return null;
+           }
+       } catch (IOException e) {
+           throw new RuntimeException("Error leyendo el archivo JSON ", e);
+       }
+   }
 
     private boolean isCostInRange(int cost, int start, int end) {
         return cost >= start && cost <= end;
