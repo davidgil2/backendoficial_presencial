@@ -11,14 +11,18 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+// Definición de la excepción personalizada para errores de lectura de JSON
+class JsonReadException extends RuntimeException {
+    public JsonReadException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
 @Service
+
 public class FlightService {
     //Ruta del archivo
     private static final String FILE_PATH = "flights.json";
     private static final String JSON_READ_ERROR_MSG = "Error leyendo el archivo JSON";
-
-
 
     //Método de la lógica de búsqueda de vuelos
     public List<List<Flight>> searchFlightsByDate(LocalDate startDate, LocalDate endDate) {
@@ -33,7 +37,7 @@ public class FlightService {
                         .toList()); // Utilizar toList() en lugar de Collectors.toList()
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new JsonReadException(JSON_READ_ERROR_MSG, e);
         }
         return new ArrayList<>(); // Devolver una lista vacía si hay una excepción o si inputStream es nulo
     }
@@ -63,7 +67,7 @@ public class FlightService {
                return Collections.emptyList();
            }
        } catch (IOException e) {
-           throw new RuntimeException(JSON_READ_ERROR_MSG, e);
+           throw new JsonReadException(JSON_READ_ERROR_MSG, e);
        }
    }
 
@@ -86,7 +90,8 @@ public class FlightService {
                 return null;
             }
         } catch (IOException e) {
-            throw new RuntimeException(JSON_READ_ERROR_MSG, e);
+            throw new JsonReadException(JSON_READ_ERROR_MSG, e);
+
         }
     }
 
@@ -110,7 +115,8 @@ public class FlightService {
                 return null;
             }
         } catch (IOException e) {
-            throw new RuntimeException(JSON_READ_ERROR_MSG, e);
+            throw new JsonReadException(JSON_READ_ERROR_MSG, e);
+
         }
     }
 
@@ -134,7 +140,8 @@ public class FlightService {
             }
             return null; // Indica que no se encontró el vuelo con el ID dado
         } catch (IOException e) {
-            throw new RuntimeException(JSON_READ_ERROR_MSG, e);
+            throw new JsonReadException(JSON_READ_ERROR_MSG, e);
+
         }
     }
 
