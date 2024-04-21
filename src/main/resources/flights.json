@@ -6,7 +6,13 @@
     "destination": "Cali",
     "departureDate": "2024-01-01T08:00:00",
     "arrivalDate": "2024-01-01T10:00:00",
-    "price": 159
+    "price": {
+      "seatCost": 100,
+      "flightCost": 50,
+      "baggageCost": 5,
+      "otherCosts": 4,
+      "totalCost": 159
+    }
   },
   {
     "id": 2,
@@ -15,7 +21,13 @@
     "destination": "Miami",
     "departureDate": "2024-01-02T12:00:00",
     "arrivalDate": "2024-01-02T14:00:00",
-    "price": 443
+    "price": {
+      "seatCost": 300,
+      "flightCost": 120,
+      "baggageCost": 20,
+      "otherCosts": 3,
+      "totalCost": 443
+    }
   },
   {
     "id": 3,
@@ -24,7 +36,13 @@
     "destination": "Cartagena",
     "departureDate": "2024-01-02T12:00:00",
     "arrivalDate": "2024-01-02T14:00:00",
-    "price": 100
+    "price": {
+      "seatCost": 80,
+      "flightCost": 15,
+      "baggageCost": 3,
+      "otherCosts": 2,
+      "totalCost": 100
+    }
   },
   {
     "id": 4,
@@ -33,7 +51,13 @@
     "destination": "Cali",
     "departureDate": "2024-01-03T13:00:00",
     "arrivalDate": "2024-01-03T15:00:00",
-    "price": 98
+    "price": {
+      "seatCost": 70,
+      "flightCost": 20,
+      "baggageCost": 5,
+      "otherCosts": 3,
+      "totalCost": 98
+    }
   },
   {
     "id": 5,
@@ -42,7 +66,13 @@
     "destination": "Bogota",
     "departureDate": "2024-01-03T12:00:00",
     "arrivalDate": "2024-01-03T14:00:00",
-    "price": 54
+    "price": {
+      "seatCost": 40,
+      "flightCost": 10,
+      "baggageCost": 3,
+      "otherCosts": 1,
+      "totalCost": 54
+    }
   },
   {
     "id": 6,
@@ -51,6 +81,12 @@
     "destination": "Santa Marta",
     "departureDate": "2024-01-04T12:00:00",
     "arrivalDate": "2024-01-04T14:00:00",
-    "price": 123
+    "price": {
+      "seatCost": 100,
+      "flightCost": 15,
+      "baggageCost": 5,
+      "otherCosts": 3,
+      "totalCost": 123
+    }
   }
 ]

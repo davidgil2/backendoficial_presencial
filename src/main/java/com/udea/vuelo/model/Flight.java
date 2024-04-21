@@ -5,12 +5,14 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 import java.time.LocalDate;
 
+
 public class Flight {
     private int id;
     private String airline;
     private String origin;
     private String destination;
-    private int price;
+    private Price price; // Cambio de int a objeto Price
+
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate departureDate;
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -19,7 +21,7 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(int id, String airline, String origin, String destination, int price, LocalDate departureDate, LocalDate arrivalDate) {
+    public Flight(int id, String airline, String origin, String destination, Price price, LocalDate departureDate, LocalDate arrivalDate) {
         this.id = id;
         this.airline = airline;
         this.origin = origin;
@@ -61,11 +63,11 @@ public class Flight {
         this.destination = destination;
     }
 
-    public int getPrice() {
+    public Price getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Price price) {
         this.price = price;
     }
 

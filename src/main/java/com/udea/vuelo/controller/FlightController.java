@@ -1,6 +1,7 @@
 package com.udea.vuelo.controller;
 
 import com.udea.vuelo.model.Flight;
+import com.udea.vuelo.model.Price;
 import com.udea.vuelo.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -34,7 +34,7 @@ public class FlightController {
             @RequestParam(name = "startPrice") int startPrice,
             @RequestParam(name = "endPrice") int endPrice) {
 
-        return flightService.searchFlightsByPrice(startPrice, endPrice);
+        return flightService.searchFlightsByTotalCost(startPrice, endPrice);
     }
 
     @GetMapping("/searchbyroute")
@@ -54,14 +54,15 @@ public class FlightController {
     }
 
     @GetMapping("/pricebyid")
-    public ResponseEntity<Integer> priceById(@RequestParam(name = "id") int id) {
-        int price = flightService.searchPriceById(id);
-        if (price != -1) {
-            return ResponseEntity.ok(price);
+    public ResponseEntity<Price> priceById(@RequestParam(name = "id") int id) {
+        Price priceInfo = flightService.searchPriceById(id);
+        if (priceInfo != null) {
+            return ResponseEntity.ok(priceInfo);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @GetMapping("/paymentgateways")
     public ResponseEntity<String> paymentgateways() {
