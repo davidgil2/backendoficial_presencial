@@ -87,7 +87,7 @@ public class FlightService {
                                 .filter(flight -> isRouteInRoutes(flight.getOrigin(),flight.getDestination(),origin, destination))
                                 .toList());
             } else {
-                return null;
+                return Collections.emptyList();
             }
         } catch (IOException e) {
             throw new JsonReadException(JSON_READ_ERROR_MSG, e);
@@ -112,7 +112,7 @@ public class FlightService {
                                 .filter(flight -> isAirlineInFlights(flight.getAirline(),airline))
                                 .toList());
             } else {
-                return null;
+                return Collections.emptyList();
             }
         } catch (IOException e) {
             throw new JsonReadException(JSON_READ_ERROR_MSG, e);
