@@ -55,7 +55,7 @@ public class FlightService {
                         .collect(Collectors.groupingBy(Flight::getAirline))
                         .values()
                         .stream()
-                        .map(flightList -> flightList.stream().sorted(Comparator.comparingInt(flight -> flight.getPrice().getTotalCost())).collect(Collectors.toList()))
+                        .map(flightList -> flightList.stream().sorted(Comparator.comparingInt(flight -> flight.getPrice().getTotalCost())).toList())
                         .collect(Collectors.toList());
             } else {
                 return null;
