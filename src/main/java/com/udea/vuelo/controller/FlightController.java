@@ -3,7 +3,6 @@ package com.udea.vuelo.controller;
 import com.udea.vuelo.model.Flight;
 import com.udea.vuelo.model.Price;
 import com.udea.vuelo.service.FlightService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +16,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/flights")
 public class FlightController {
-    @Autowired
-    private FlightService flightService;
+
+    private final FlightService flightService;
+
+    // Constructor para inyección de dependencias
+    public FlightController(FlightService flightService) {
+        this.flightService = flightService;
+    }
 
     @GetMapping("/searchbydate")
     public List<List<Flight>> searchFlightsByDate(
@@ -47,7 +51,6 @@ public class FlightController {
 
     @GetMapping("/searchbyairline")
     public List<List<Flight>> searchFlightsByAirline(
-
             @RequestParam(name = "airline") String airline) {
 
         return flightService.searchFlightsByAirline(airline);
@@ -63,7 +66,6 @@ public class FlightController {
         }
     }
 
-
     @GetMapping("/paymentgateways")
     public ResponseEntity<String> paymentgateways() {
         List<String> paymentGateways = Arrays.asList("PayPal", "Pse", "Wompi", "Bancolombia", "GetTrx", "Stripe", "PayU", "Mercadopago");
@@ -75,6 +77,4 @@ public class FlightController {
 
         return ResponseEntity.ok(response.toString());
     }
-
-
 }
