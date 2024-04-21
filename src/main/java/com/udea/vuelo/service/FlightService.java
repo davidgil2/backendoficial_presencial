@@ -15,13 +15,14 @@ import java.util.stream.Collectors;
 @Service
 public class FlightService {
     //Ruta del archivo
-    private static final String filePath = "flights.json";
+    private static final String FILE_PATH = "flights.json";
+
 
     //Método de la lógica de búsqueda de vuelos
     public List<List<Flight>> searchFlightsByDate(LocalDate startDate, LocalDate endDate) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
             if(inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
                 return Arrays.asList(
@@ -45,7 +46,7 @@ public class FlightService {
     public List<List<Flight>> searchFlightsByTotalCost(int startCost, int endCost) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
 
             if(inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
@@ -71,7 +72,7 @@ public class FlightService {
     public List<List<Flight>> searchFlightsByRoute(String origin, String destination) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
 
             if(inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
@@ -95,7 +96,7 @@ public class FlightService {
     public List<List<Flight>> searchFlightsByAirline(String airline) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
 
             if(inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
@@ -119,7 +120,7 @@ public class FlightService {
     public Price searchPriceById(int id) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
 
             if (inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
