@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class FlightService {
     //Ruta del archivo
-    private final String filePath = "flights.json";
+    private static final String filePath = "flights.json";
 
     //Método de la lógica de búsqueda de vuelos
     public List<List<Flight>> searchFlightsByDate(LocalDate startDate, LocalDate endDate) {
