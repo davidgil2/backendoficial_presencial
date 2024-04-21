@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 public class FlightService {
     //Ruta del archivo
     private static final String FILE_PATH = "flights.json";
+    private static final String JSON_READ_ERROR_MSG = "Error leyendo el archivo JSON";
+
 
 
     //Método de la lógica de búsqueda de vuelos
@@ -61,7 +63,7 @@ public class FlightService {
                return Collections.emptyList();
            }
        } catch (IOException e) {
-           throw new RuntimeException("Error leyendo el archivo JSON ", e);
+           throw new RuntimeException(JSON_READ_ERROR_MSG, e);
        }
    }
 
@@ -84,7 +86,7 @@ public class FlightService {
                 return null;
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error leyendo el archivo JSON ", e);
+            throw new RuntimeException(JSON_READ_ERROR_MSG, e);
         }
     }
 
@@ -108,7 +110,7 @@ public class FlightService {
                 return null;
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error leyendo el archivo JSON ", e);
+            throw new RuntimeException(JSON_READ_ERROR_MSG, e);
         }
     }
 
@@ -132,7 +134,7 @@ public class FlightService {
             }
             return null; // Indica que no se encontró el vuelo con el ID dado
         } catch (IOException e) {
-            throw new RuntimeException("Error leyendo el archivo JSON ", e);
+            throw new RuntimeException(JSON_READ_ERROR_MSG, e);
         }
     }
 
