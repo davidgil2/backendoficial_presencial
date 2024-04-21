@@ -85,7 +85,7 @@ public class FlightService {
                 return Arrays.asList(
                         Arrays.stream(flights)
                                 .filter(flight -> isRouteInRoutes(flight.getOrigin(),flight.getDestination(),origin, destination))
-                                .collect(Collectors.toList()));
+                                .toList());
             } else {
                 return null;
             }
@@ -110,7 +110,7 @@ public class FlightService {
                 return Arrays.asList(
                         Arrays.stream(flights)
                                 .filter(flight -> isAirlineInFlights(flight.getAirline(),airline))
-                                .collect(Collectors.toList()));
+                                .toList());
             } else {
                 return null;
             }
