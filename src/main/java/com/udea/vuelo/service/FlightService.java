@@ -58,7 +58,7 @@ public class FlightService {
                        .map(flightList -> flightList.stream().sorted(Comparator.comparingInt(flight -> flight.getPrice().getTotalCost())).toList())
                        .toList();
            } else {
-               return null;
+               return Collections.emptyList();
            }
        } catch (IOException e) {
            throw new RuntimeException("Error leyendo el archivo JSON ", e);
