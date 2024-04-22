@@ -1,4 +1,4 @@
-FROM maven:3.9.6-amazoncorretto-21 AS build
+FROM maven:3.9.6-amazoncorretto-17 AS build
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ COPY . /app
 
 RUN mvn clean package -Dmaven.test.skip
 
-FROM amazoncorretto:21-alpine-jdk
+FROM amazoncorretto:17-alpine-jdk
 
 WORKDIR /app
 
