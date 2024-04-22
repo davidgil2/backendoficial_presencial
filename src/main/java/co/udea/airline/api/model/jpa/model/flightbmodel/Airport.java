@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Setter
 @RequiredArgsConstructor
 @Entity
-@Table(name = "Airport", schema = "Code_factory2")
+@Table(name = "Airport")
 public class Airport implements Serializable {
 
     @Id

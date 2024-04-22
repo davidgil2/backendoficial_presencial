@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 @Entity
-@Table(name = "FlightCrew", schema = "Code_factory2")
+@Table(name = "FlightCrew")
 public class FlightCrew {
 
     @Id

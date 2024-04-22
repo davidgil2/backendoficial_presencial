@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @Setter
 @RequiredArgsConstructor
 @Entity
-@Table(name = "Scale", schema = "Code_factory2")
+@Table(name = "Scale")
 public class Scale {
       @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

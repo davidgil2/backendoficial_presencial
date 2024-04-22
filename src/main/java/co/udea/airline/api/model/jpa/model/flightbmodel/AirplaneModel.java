@@ -21,7 +21,7 @@ import java.io.Serializable;
 @Entity
 
 
-@Table(name = "Airplanemodel", schema = "Code_factory")
+@Table(name = "AirplaneModel")
 
 public class AirplaneModel implements Serializable {
     @Id

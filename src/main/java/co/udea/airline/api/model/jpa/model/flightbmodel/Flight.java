@@ -18,7 +18,7 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @Entity
-@Table(name = "flight", schema = "Code_factory2")
+@Table(name = "flight")
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
