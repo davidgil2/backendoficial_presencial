@@ -82,16 +82,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.7</version> <!-- Asegúrate de usar la versión más reciente -->
-
-				<!--
-				<configuration>
-					 Excluir la carpeta específica de la cobertura
-					<excludes>
-						<exclude>**/com/udea/vuelo/model/**</exclude>
-					</excludes>
-				</configuration>
-				-->
+				<version>0.8.7</version>
 
 				<executions>
 					<execution>
@@ -102,7 +93,7 @@
 					</execution>
 					<execution>
 						<id>report</id>
-						<phase>verify</phase> <!-- Ejecutar después de las pruebas -->
+						<phase>verify</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
