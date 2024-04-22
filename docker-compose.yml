@@ -3,10 +3,10 @@ version: "3"
 services:
   db:
     image: gvenzl/oracle-xe:latest
-    container_name: sitas-db-gvenzl
-    hostname: sitas-oracle-db-gvenzl
+    container_name: airline-db
+    hostname: airline-oracle-db
     environment:
-      ORACLE_PASSWORD: F4br1c43sc23l4
+      ORACLE_PASSWORD: oracle
     ports:
       - "1521:1521"
     volumes:
@@ -16,8 +16,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: sitas-back-gvenzl
-    hostname: sitas-api-gvenzl
+    container_name: airline-back
+    hostname: airline-back-api
     ports:
       - "8018:8080"
     depends_on:

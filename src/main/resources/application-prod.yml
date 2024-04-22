@@ -1,3 +1,11 @@
+server:
+  ssl:
+  key-store: classpath:codefact.p12
+  key-store-password: ${KEY_STORE_PASSWORD}
+  keyStoreType: PKCS12
+  protocol: TLS
+  enabled-protocols: TLSv1.2
+
 spring:
   jpa:
     show-sql: true
@@ -24,8 +32,3 @@ spring:
       idle-timeout: 10000
       maximum-pool-size: 5
     driver-class-name: oracle.jdbc.driver.OracleDriver
-
-logging:
-  level:
-    root: DEBUG
-    org.springframework: DEBUG
