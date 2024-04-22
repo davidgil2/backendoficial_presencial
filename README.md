@@ -35,7 +35,7 @@ Luego de correr este comando, deberá esperar la inicialización de la bases de 
 > [!TIP]
 > Si tiene la aplicación Docker Desktop, puede visualizar el proceso de creación de la base de datos dando clic en el contenedor `sitas-db` y mirando los logs del mismo. Este proceso puede tardar varios minutos.
 
-Una vez la base de datos esté disponible, puede ingresar a la aplicación en la URL [`http://localhost:8080`](http://localhost:8080). La documentación en Swagger la puede encontrar en la URL [http://localhost:8080/sitas-api/swagger-ui/index.html](http://localhost:8080/sitas-api/swagger-ui/index.html).
+Una vez la base de datos esté disponible, puede ingresar a la aplicación en la URL [**`http://localhost:8018`**](http://localhost:8018). La documentación en Swagger la puede encontrar en la URL [**`http://localhost:8018/modulo-18/swagger-ui/index.html`**](http://localhost:8018/modulo-18/swagger-ui/index.html).
 
 En caso de tener problemas, puede intentar reiniciando el contenedor de la API.
 
