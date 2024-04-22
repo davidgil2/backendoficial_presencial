@@ -16,3 +16,10 @@ airline-api:
   openapi:
     dev-url: http://localhost:8018/modulo-18
     prod-url: https://codefact.udea.edu.co/modulo-18
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /docs
+    tagsSorter: alpha
