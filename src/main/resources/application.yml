@@ -1,12 +1,18 @@
 # Server properties
 server:
   servlet:
-    context-path: /sitas
-  port: 8080
+    context-path: /modulo-18
+  port: 8018
 # Spring properties
 spring:
   # Dev is active by default. This value can be overwritten by java arg param
   profiles:
     active: dev
   application:
-    name: ssmu-api
+    name: sitas-api
+
+# OpenAPI properties
+airline-api:
+  openapi:
+    dev-url: http://localhost:8018/modulo-18
+    prod-url: https://codefact.udea.edu.co/modulo-18
