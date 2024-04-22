@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-public class FlightTest {
+class FlightTest {
 
     @Mock
     private Price priceMock;

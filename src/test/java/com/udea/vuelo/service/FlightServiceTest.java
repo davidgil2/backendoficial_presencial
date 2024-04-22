@@ -24,7 +24,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class FlightServiceTest {
+class FlightServiceTest {
 
     private FlightService flightService;
 
