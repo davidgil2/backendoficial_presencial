@@ -5,11 +5,14 @@ package co.udea.airline.api.services.flightsservices;
 import co.udea.airline.api.model.jpa.model.flightbmodel.Flight;
 import co.udea.airline.api.model.jpa.model.flightbmodel.Scale;
 
+import co.udea.airline.api.model.jpa.repository.bookingrepository.IBookingRepository;
 import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightDetailsProjection;
 import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightProjection;
 import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightsRepository;
 
 
+import co.udea.airline.api.model.jpa.repository.flightbrepository.IScaleRespository;
+import co.udea.airline.api.utils.common.DataValidation;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +20,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
@@ -38,6 +43,9 @@ public class FlightServices {
 
     @Autowired
     private IFlightDetailsProjection flightDetailsProjection;
+
+    @Autowired
+    private IScaleRespository scaleRepository;
     public List<Flight> searchFlights() {
         return flightRepository.findAll();
     }
@@ -48,6 +56,7 @@ public class FlightServices {
     public List<IFlightDetailsProjection> searchFlightDetailsByFlightNumber(String flightNumber) {
         return flightRepository.findFlightDetailsByFlightNumber(flightNumber);
     }
+
     public Flight addFlight(Flight flight) {
         Flight savedFlight = null;
         try {
@@ -65,15 +74,21 @@ public class FlightServices {
         }
         return savedFlight;
     }
+
+
     public void deleteFlight(Long id) {
         try {
+            DataValidation.valiateBookings(id);
+
+            scaleRepository.deleteScaleByFlightId(id);
             flightRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("No se encontró el vuelo con id: " + id);
         } catch (Exception e) {
-            System.out.println("Error al eliminar el vuelo con id: " + id);
+            System.out.println("Error al eliminar el vuelo con id: " + id + " debido a  que cuenta con almenos una reserva asociada");
         }
     }
+
     public List<Flight> searchFlight(Long id) {
         Flight flight = flightRepository.findById(id).orElse(null);
         return flight != null ? Collections.singletonList(flight) : Collections.<Flight>emptyList();

@@ -91,9 +91,16 @@ public class FlightManagementController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @Operation(summary = "Delete a flight")
+    @ApiResponse(responseCode = "200", content = {
+            @Content(schema = @Schema(implementation = Flight.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
+    }, description = "Flight deleted successfully")
+    @ApiResponse(responseCode = "400", description = "Invalid")
+    @ApiResponse(responseCode = "500", description = "Internal error")
     public void deleteFlight(@PathVariable Long id) {
         flightService.deleteFlight(id);
     }
+
 
     @GetMapping("/search/{id}")
     public List<Flight> searchFlight(@PathVariable Long id) {
