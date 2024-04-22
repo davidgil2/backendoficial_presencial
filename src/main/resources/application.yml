@@ -1,8 +1,14 @@
 # Server properties
 server:
   servlet:
-    context-path: /sitas-api
+    context-path: /modulo-18
   port: 8080
+  ssl:
+    key-store: classpath:codefact.p12
+    key-store-password: 123456
+    keyStoreType: PKCS12
+    protocol: TLS
+    enabled-protocols: TLSv1.2
 # Spring properties
 spring:
   # Dev is active by default. This value can be overwritten by java arg param
