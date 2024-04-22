@@ -27,7 +27,7 @@ spring:
 airline-api:
   openapi:
     dev-url: http://localhost:8080/sitas-api
-    prod-url: https://codefact.udea.edu.co/sitas-api
+    prod-url: https://codefact.udea.edu.co/modulo-18
 
 logging:
   level:
