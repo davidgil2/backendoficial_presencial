@@ -1,11 +1,11 @@
-name: SonarCloud Auth-B
+name: actions-pagosB
 on:
   push:
     branches:
       - modulo-de-pagos-b
 jobs:
   build:
-    name: Build and analyze
+    name: Build - analyze - test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/modulo-de-pagos-b'
     steps:
@@ -29,6 +29,10 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+
+      - name: Build and test
+        run: mvn -B verify
+
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
