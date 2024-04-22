@@ -20,7 +20,9 @@ services:
     hostname: sitas-api-gvenzl
     ports:
       - "8018:8080"
+    depends_on:
+      - db
     environment:
-      JDBC_URL: jdbc:oracle:thin:@127.0.0.1:1521/XEPDB1
+      JDBC_URL: jdbc:oracle:thin:@db:1521/XEPDB1
       JDBC_USER: AIRLINE_ADMIN
       JDBC_PASSWORD: SITAS
