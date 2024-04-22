@@ -19,6 +19,8 @@ import org.springframework.web.server.ResponseStatusException;
 public class BoardingPassService implements IBoardingPassService{
 
     private final IBoardingPassRepository repository;
+    // TODO: create this repository
+    private final IUserRepository userRepository;
 
     /**
      * Constructs a new BoardingPassService with the provided boarding pass repository.
@@ -28,6 +30,7 @@ public class BoardingPassService implements IBoardingPassService{
     @Autowired
     public BoardingPassService(IBoardingPassRepository repository) {
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -37,13 +40,18 @@ public class BoardingPassService implements IBoardingPassService{
      * @return ResponseEntity with HTTP status 200 (OK) and the created boarding pass if successful,
      *         ResponseEntity with HTTP status 409 (CONFLICT) if the boarding pass already exists,
      *         ResponseEntity with HTTP status 500 (INTERNAL_SERVER_ERROR) if an unexpected error occurs.
+     * @throws DataDuplicatedException    If the boarding pass already exists in the database.
+     * @throws BusinessException          If a data integrity violation or database error occurs.
+     * @throws IllegalArgumentException  If an invalid argument is passed.
+     * @throws ResponseStatusException    If an unexpected error occurs during the operation.
+     *
      */
     @Override
     public ResponseEntity<BoardingPass> createBoardingPass(BoardingPass boardingPass) {
         try {
             // TODO: change for the user id
             // Check if a boarding pass with the given ID already exists
-            if (repository.existsById(boardingPass.getPassenger().getPassagerId())) {
+            if (userRepository.existsById(boardingPass.getPassenger().getPassagerId())) {
                 // Boarding pass already exists, throw HTTP exception
                 throw new DataDuplicatedException("Boarding pass already exists");
             } else {

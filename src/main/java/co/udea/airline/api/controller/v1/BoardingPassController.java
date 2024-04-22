@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ public class BoardingPassController {
 
     private final IBoardingPassService boardingPassService;
 
+    @Autowired
     public BoardingPassController(IBoardingPassService boardingPassService) {
         this.boardingPassService = boardingPassService;
     }
@@ -39,10 +41,11 @@ public class BoardingPassController {
      * @return ResponseEntity containing the created boarding pass if successful (HTTP status 200),
      *         or an appropriate error response otherwise (HTTP status 409 if the boarding pass already exists,
      *         or HTTP status 500 for internal server error).
+     * @throws ResponseStatusException If an error occurs during the operation.
      */
     @Operation(summary = "Create a boarding pass")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Boarding pass created", content = {
+        @ApiResponse(responseCode = "201", description = "Boarding pass created", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = BoardingPass.class)) }),
         @ApiResponse(responseCode = "409", description = "Conflict - Boarding pass already exists", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = StandardResponse.class)) }),
