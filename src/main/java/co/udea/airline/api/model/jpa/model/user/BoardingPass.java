@@ -2,9 +2,7 @@ package co.udea.airline.api.model.jpa.model.user;
 
 import jakarta.persistence.*;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -28,15 +26,18 @@ public class BoardingPass {
 
     // TODO: Create all this models
     //@ManyToOne
-    //@JoinColumn(name = "passenger_id", nullable = false)
-    //private Passenger passenger;
+    //@JoinColumn(name = "passenger_id")
+    //@NonNull
+    //private Passeger passenger;
 
     //@ManyToOne
-    //@JoinColumn(name = "booking_id", nullable = false)
+    //@JoinColumn(name = "booking_id")
+    //@NonNull
     //private Booking booking;
 
     //@ManyToOne
-    //@JoinColumn(name = "Flight_ID", nullable = false)
+    //@JoinColumn(name = "Flight_ID")
+    //@NonNull
     // Flight flight;
 
     /**
@@ -44,7 +45,7 @@ public class BoardingPass {
      * Represents a many-to-one relationship with the MedicalInfo entity.
      */
     @ManyToOne
-    @JoinColumn(name = "MEDICAL_INFO_ID", nullable = false)
+    @JoinColumn(name = "MEDICAL_INFO_ID")
     @NonNull
     private MedicalInfo medicalInfo;
 

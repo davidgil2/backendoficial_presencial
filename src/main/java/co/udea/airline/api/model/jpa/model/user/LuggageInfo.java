@@ -19,6 +19,7 @@ import lombok.NonNull;
 @NoArgsConstructor
 @Table (name = "LUGGAGE_INFO")
 public class LuggageInfo {
+
     /**
      * Unique identifier for luggage information.
      */
