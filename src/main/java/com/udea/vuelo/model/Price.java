@@ -7,6 +7,14 @@ public class Price {
     private int otherCosts;
     private int totalCost;
 
+    public Price(int seatCost, int flightCost, int baggageCost, int otherCosts, int totalCost) {
+        this.seatCost = seatCost;
+        this.flightCost = flightCost;
+        this.baggageCost = baggageCost;
+        this.otherCosts = otherCosts;
+        this.totalCost = totalCost;
+    }
+
     public int getSeatCost() {
         return seatCost;
     }
@@ -46,4 +54,7 @@ public class Price {
     public void setTotalCost(int totalCost) {
         this.totalCost = totalCost;
     }
+
+
+
 }

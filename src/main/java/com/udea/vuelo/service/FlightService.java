@@ -18,16 +18,21 @@ class JsonReadException extends RuntimeException {
     }
 }
 @Service
-
 public class FlightService {
     //Ruta del archivo
     private static final String FILE_PATH = "flights.json";
     private static final String JSON_READ_ERROR_MSG = "Error leyendo el archivo JSON";
 
+    private final ObjectMapper objectMapper;
+
+    public FlightService(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     //Método de la lógica de búsqueda de vuelos
     public List<List<Flight>> searchFlightsByDate(LocalDate startDate, LocalDate endDate) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
+
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
             if(inputStream != null) {
                 Flight[] flights = objectMapper.readValue(inputStream, Flight[].class);
@@ -51,7 +56,6 @@ public class FlightService {
 
    public List<List<Flight>> searchFlightsByTotalCost(int startCost, int endCost) {
        try {
-           ObjectMapper objectMapper = new ObjectMapper();
            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
 
            if (inputStream != null) {
@@ -77,7 +81,7 @@ public class FlightService {
 
     public List<List<Flight>> searchFlightsByRoute(String origin, String destination) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
+
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
 
             if(inputStream != null) {
@@ -102,7 +106,7 @@ public class FlightService {
 
     public List<List<Flight>> searchFlightsByAirline(String airline) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
+
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
 
             if(inputStream != null) {
@@ -127,7 +131,7 @@ public class FlightService {
 
     public Price searchPriceById(int id) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
+
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(FILE_PATH);
 
             if (inputStream != null) {

@@ -1,5 +1,6 @@
 package com.udea.vuelo.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.udea.vuelo.model.Flight;
 import com.udea.vuelo.model.Price;
 import com.udea.vuelo.service.FlightService;
@@ -17,13 +18,14 @@ import java.util.List;
 @RequestMapping("/flights")
 public class FlightController {
 
+    private final ObjectMapper objectMapper;
     private final FlightService flightService;
 
-    // Constructor para inyección de dependencias
-    public FlightController(FlightService flightService) {
+
+    public FlightController(ObjectMapper objectMapper, FlightService flightService) {
+        this.objectMapper = objectMapper;
         this.flightService = flightService;
     }
-
     @GetMapping("/searchbydate")
     public List<List<Flight>> searchFlightsByDate(
             @RequestParam(name = "startDate") String startDate,
