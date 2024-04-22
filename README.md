@@ -2,6 +2,16 @@
 
 [Spring Boot](http://projects.spring.io/spring-boot/) application [3.1.2](https://spring.io/blog/2023/07/20/spring-boot-3-1-2-available-now)
 
+## Despliegue
+
+La aplicación web fue desplegada junto con la respectiva base de datos Oracle en el servidor proporcionado por la CodeFactory:
+
+- **Swagger UI:** https://codefact.udea.edu.co/modulo-18/swagger-ui/index.html
+- **URL Base:** https://codefact.udea.edu.co/modulo-18
+
+> [!IMPORTANT]  
+> Para realizar pruebas desde la interfaz gráfica de Swagger, es necesario seleccionar la URL de servidor de producción al inicio de la página.
+
 ## Ejecutar con Docker
 
 > [!IMPORTANT]  
