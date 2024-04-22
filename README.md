@@ -28,17 +28,17 @@ Con este comando docker montará dos servicios: uno de bases de datos y la aplic
 
 > [!NOTE]  
 > La descarga de las imagenes usadas puede tardar un tiempo considerable ya que la imagen
-> de bases de datos Oracle usada tiene un peso aproximado de 3.3GB.
+> de bases de datos Oracle usada tiene un peso aproximado de 1.4GB.
 
 Luego de correr este comando, deberá esperar la inicialización de la bases de datos antes de comenzar a usar la API.
 
 > [!TIP]
-> Si tiene la aplicación Docker Desktop, puede visualizar el proceso de creación de la base de datos dando clic en el contenedor `sitas-db` y mirando los logs del mismo. Este proceso puede tardar varios minutos.
+> Si tiene la aplicación Docker Desktop, puede visualizar el proceso de creación de la base de datos dando clic en el contenedor `modulo-vuelos-a-db` y mirando los logs del mismo. Este proceso puede tardar varios minutos.
 
 Una vez la base de datos esté disponible, puede ingresar a la aplicación en la URL [**`http://localhost:8018`**](http://localhost:8018). La documentación en Swagger la puede encontrar en la URL [**`http://localhost:8018/modulo-18/swagger-ui/index.html`**](http://localhost:8018/modulo-18/swagger-ui/index.html).
 
 En caso de tener problemas, puede intentar reiniciando el contenedor de la API.
 
 ```shell
-docker restart sitas-back
+docker restart modulo-vuelos-a-api
 ```

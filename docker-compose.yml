@@ -3,8 +3,8 @@ version: "3"
 services:
   db:
     image: gvenzl/oracle-xe:latest
-    container_name: airline-db
-    hostname: airline-oracle-db
+    container_name: modulo-vuelos-a-db
+    hostname: modulo-vuelos-a-db
     environment:
       ORACLE_PASSWORD: oracle
     ports:
@@ -16,8 +16,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: airline-back
-    hostname: airline-back-api
+    container_name: modulo-vuelos-a-api
+    hostname: modulo-vuelos-a-api
     ports:
       - "8018:8080"
     depends_on:
