@@ -12,6 +12,6 @@ WORKDIR /app
 
 COPY --from=build /app/target/airline-api-0.0.1-SNAPSHOT.jar /app/application.jar
 
-EXPOSE 8080
+EXPOSE 8018
 
 CMD ["java", "-jar", "application.jar"]

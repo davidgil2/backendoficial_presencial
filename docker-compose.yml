@@ -19,7 +19,7 @@ services:
     container_name: modulo-vuelos-a-api
     hostname: modulo-vuelos-a-api
     ports:
-      - "8018:8080"
+      - "8018:8018"
     depends_on:
       - db
     environment:
