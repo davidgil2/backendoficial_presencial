@@ -84,12 +84,14 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.7</version> <!-- Asegúrate de usar la versión más reciente -->
 
+				<!--
 				<configuration>
-					<!-- Excluir la carpeta específica de la cobertura -->
+					 Excluir la carpeta específica de la cobertura
 					<excludes>
 						<exclude>**/com/udea/vuelo/model/**</exclude>
 					</excludes>
 				</configuration>
+				-->
 
 				<executions>
 					<execution>
