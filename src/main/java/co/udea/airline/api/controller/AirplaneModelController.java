@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/airplane-models")
+@RequestMapping("/api/v1/airplane-models")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET })
 @Tag(name = "2 - Airplane Models Data", description = "Get information about airplane models")
 public class AirplaneModelController {

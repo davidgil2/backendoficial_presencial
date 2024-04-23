@@ -17,7 +17,7 @@ import co.udea.airline.api.utils.exception.DataNotFoundException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/api/airports")
+@RequestMapping("/api/v1/airports")
 @CrossOrigin(origins = "*")
 @Tag(name = "3 - Airports Data", description = "Get information about airports")
 public class AirportController {

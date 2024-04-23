@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/flights")
+@RequestMapping("/api/v1/flights")
 @CrossOrigin(origins = "*")
 @Tag(name = "1 - Flight Management", description = "CRUD operations for flights")
 public class FlightController {
