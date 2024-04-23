@@ -55,7 +55,9 @@ public class AuthenticationService {
         user.setPhoneNumber(request.phoneNumber());
         user.setGenre(request.genre());
         user.setPositions(positionRepository.findByName("USER"));
-
+        user.setVerified(true);
+        user.setFailedLoginAttempts(0);
+        user.setEnabled(true);
         user = repository.save(user);
 
         String jwt = jwtService.generateToken(user);
