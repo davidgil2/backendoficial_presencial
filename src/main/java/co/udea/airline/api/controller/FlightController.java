@@ -96,20 +96,21 @@ public class FlightController {
         return ResponseEntity.ok(new FlightDTO());
     }
 
-    @Operation(summary = "Delete flight by id", description = "Delete flight by id")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<FlightDTO> deleteMethodName(@PathVariable long id) {
-        // TODO: Add path validation
-        // TODO: Add standard response
-        Flight deletedFlight = flightService.deleteFlightById(id);
+    @Operation(summary = "Delete flight by flight number", description = "Delete flight by flight number")
+    @DeleteMapping("/{flightNumber}")
+    public ResponseEntity<FlightDTO> deleteMethodNameByFlightNumber(@PathVariable String flightNumber) {
+        Flight deletedFlight = null;
+        try {
 
+            deletedFlight = flightService.deleteFlightByFlightNumber(flightNumber);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (deletedFlight == null) {
-            return ResponseEntity.notFound().build();
+            throw new DataNotFoundException("Flight with flight number: " + flightNumber + " not found");
         }
 
-        FlightDTO deletedFlightDTO = modelMapper.map(deletedFlight, FlightDTO.class);
-
-        return ResponseEntity.ok(deletedFlightDTO);
+        return ResponseEntity.ok(modelMapper.map(deletedFlight, FlightDTO.class));
     }
 
 }

@@ -65,4 +65,16 @@ public class FlightService {
         flightRepository.deleteById(id);
         return deletedFlight;
     }
+
+    public Flight deleteFlightByFlightNumber(String flightNumber) {
+        Flight deletedFlight = getFlightByFlightNumber(flightNumber);
+
+        if (deletedFlight == null) {
+            return null;
+        }
+
+        deleteFlightById(deletedFlight.getId());
+
+        return deletedFlight;
+    }
 }

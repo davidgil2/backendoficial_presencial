@@ -34,4 +34,8 @@ public class ScaleService {
 
         return scale;
     }
+
+    public void deleteScaleById(Long id) {
+        scaleRepository.deleteById(id);
+    }
 }
