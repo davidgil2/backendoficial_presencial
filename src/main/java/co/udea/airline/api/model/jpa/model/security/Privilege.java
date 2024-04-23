@@ -22,7 +22,7 @@ public class Privilege implements GrantedAuthority {
     @Column(name = "PRIVILEGE_NAME")
     private String name;
 
-    @Column(name = "DETAIL")
+    @Column(name = "DESCRIPTION")
     private String detail;
 
     @Override

@@ -24,7 +24,7 @@ public class Position { // == Role
     @Column(name="POSITION_NAME")
     private String name;
 
-    @Column
+    @Column(name="DESCRIPTION")
     private String description;
 
     @ManyToMany

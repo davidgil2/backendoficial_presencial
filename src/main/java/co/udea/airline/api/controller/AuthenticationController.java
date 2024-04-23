@@ -26,5 +26,4 @@ public class AuthenticationController {
         return ResponseEntity.ok(authService.register(request));
     }
 
-
 }

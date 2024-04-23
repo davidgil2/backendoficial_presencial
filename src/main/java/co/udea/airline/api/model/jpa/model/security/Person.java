@@ -32,11 +32,10 @@ public class Person implements UserDetails {
     private Integer personId;
 
     @OneToOne
-    @NotNull
     @JoinColumn(name = "ID_IDENTIFICATION_TYPE")
     private IdentificationType identificationType;
 
-    @NotBlank
+
     @Column(name = "IDENTIFICATION_NUMBER")
     private String identificationNumber;
 
@@ -59,14 +58,14 @@ public class Person implements UserDetails {
     private String province;
     @Column(name = "CITY")
     private String city;
-
+    @Column(name = "ADDRESS")
     private String address;
     @NotBlank
     @Email
     private String email;
 
     @NotBlank
-    @Column
+    @Column(name = "PASSWORD")
     private String password;
 
     @Column(name = "EXTERNAL_LOGIN_SOURCE")

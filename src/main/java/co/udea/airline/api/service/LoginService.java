@@ -28,7 +28,8 @@ public class LoginService {
 
         @Autowired
         JwtUtils jwtUtils;
-
+        @Autowired
+        AuthenticationService authenticationService;
         public Jwt authenticateUser(String email, String password) throws AuthenticationException {
 
                 Authentication auth = new UsernamePasswordAuthenticationToken(email, password);
@@ -50,8 +51,9 @@ public class LoginService {
                 if (auth.isAuthenticated()) {
                         Jwt token = (Jwt) auth.getPrincipal();
                         Optional<Person> p = personRepository.findByEmail(token.getClaimAsString("email"));
-                        if (!p.isPresent())
-                                throw new UsernameNotFoundException("User hasn't registered yet");
+                        if (!p.isPresent()) {
+                                p=Optional.of(authenticationService.ExternalRegister(token.getClaimAsString("email"),"Google"));
+                        }
                         return jwtUtils.createToken(p.get());
                 }
                 throw new AuthenticationServiceException(

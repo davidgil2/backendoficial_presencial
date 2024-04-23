@@ -24,6 +24,7 @@ public class IdentificationType {
     private Long identificationTypeId;
 
     @NotBlank
+    @Column(name = "NAME_IDENTIFICATION_TYPE")
     private String identificationType;
 
 }

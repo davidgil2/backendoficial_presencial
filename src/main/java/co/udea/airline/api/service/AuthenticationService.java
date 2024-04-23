@@ -11,6 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthenticationService {
 
@@ -36,6 +38,17 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
+    public Person ExternalRegister(String email, String LoginSource){
+        Person user=new Person();
+        user.setEmail(email);
+        user.setExternalLoginSource(LoginSource);
+        user.setPositions(positionRepository.findByName("USER"));
+        user.setVerified(false);
+        user.setFailedLoginAttempts(0);
+        user.setEnabled(true);
+        repository.save(user);
+        return user;
+    }
     public AuthenticationResponse register(RegisterRequestDTO request) {
 
         // check if user already exist. if exist than authenticate the user
@@ -55,7 +68,7 @@ public class AuthenticationService {
         user.setPhoneNumber(request.phoneNumber());
         user.setGenre(request.genre());
         user.setPositions(positionRepository.findByName("USER"));
-        user.setVerified(true);
+        user.setVerified(false);
         user.setFailedLoginAttempts(0);
         user.setEnabled(true);
         user = repository.save(user);
