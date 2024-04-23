@@ -10,7 +10,8 @@ import lombok.Data;
 
 @Data
 public class ScaleDTO {
-    private String id;
+    @Schema(description = "The scale id auto-generated", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private Long id;
 
     @NotEmpty()
     private AirplaneModelDTO airplaneModel;

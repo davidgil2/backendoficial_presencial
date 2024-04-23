@@ -2,6 +2,7 @@ package co.udea.airline.api.controller;
 
 import co.udea.airline.api.model.jpa.model.flights.Flight;
 import co.udea.airline.api.services.flights.service.FlightService;
+import co.udea.airline.api.utils.exception.DataNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/flights")
 @CrossOrigin(origins = "*")
-@Tag(name = "Flight Management", description = "CRUD operations for flights")
+@Tag(name = "1 - Flight Management", description = "CRUD operations for flights")
 public class FlightController {
     @Autowired
     private ModelMapper modelMapper;

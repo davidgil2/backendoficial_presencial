@@ -1,10 +1,12 @@
 package co.udea.airline.api.model.DTO.flights;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+@Schema(name = "AirplaneModelDTO", description = "Data Transfer Object for Airplane Model")
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
