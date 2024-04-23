@@ -1,6 +1,6 @@
 package co.udea.airline.api.controller;
 
-import java.time.LocalDate;
+import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +34,8 @@ public class LoginController {
         try {
 
             Jwt jwt = loginService.authenticateUser(loginRequest.email(), loginRequest.password());
-            JWTResponseDTO response = new JWTResponseDTO(jwt.getSubject(), LocalDate.from(jwt.getExpiresAt()),
+            JWTResponseDTO response = new JWTResponseDTO(jwt.getSubject(),
+                    jwt.getExpiresAt().atZone(ZoneId.systemDefault()).toLocalDate(),
                     jwt.getTokenValue());
             return ResponseEntity.ok()
                     .body(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK, response));
@@ -53,7 +54,8 @@ public class LoginController {
         try {
 
             Jwt jwt = loginService.authenticateIdToken(loginRequest.idToken());
-            JWTResponseDTO response = new JWTResponseDTO(jwt.getSubject(), LocalDate.from(jwt.getExpiresAt()),
+            JWTResponseDTO response = new JWTResponseDTO(jwt.getSubject(),
+                    jwt.getExpiresAt().atZone(ZoneId.systemDefault()).toLocalDate(),
                     jwt.getTokenValue());
             return ResponseEntity.ok()
                     .body(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK, response));
