@@ -11,15 +11,15 @@ spring:
           batch_size: 50
           lob:
             non_contextual_creation: true
-        default_schema: FLIGHT
+        default_schema: ${D_USERNAME}
         temp:
           use_jdbc_metadata_defaults: false
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:oracle:thin:@0.0.0.0:1521:MYCDB
-    username: FLIGHT
-    password: admin0515
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     hikari:
       idle-timeout: 10000
       maximum-pool-size: 5
