@@ -46,7 +46,6 @@ public class FlightController {
             @ApiResponse(responseCode = "201", description = "Flight created")
     })
     public ResponseEntity<FlightDTO> createFlight(@Valid @RequestBody FlightDTO flight) {
-        // TODO: Add body validation
         // TODO: Add standard response
         Flight flightRes = modelMapper.map(flight, Flight.class);
         flightRes = flightService.saveFlight(flightRes);
@@ -72,7 +71,7 @@ public class FlightController {
     public ResponseEntity<FlightDTO> getMethodNameById(@PathVariable long id) {
         Flight flight = flightService.getFlightById(id);
         if (flight == null) {
-            return ResponseEntity.notFound().build();
+            throw new DataNotFoundException("Flight with ID: " + id + " not found");
         }
         return ResponseEntity.ok(modelMapper.map(flight, FlightDTO.class));
     }
