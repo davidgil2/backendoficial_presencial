@@ -10,7 +10,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 /**
  * Service class for managing boarding passes.
@@ -19,8 +22,6 @@ import org.springframework.web.server.ResponseStatusException;
 public class BoardingPassService implements IBoardingPassService{
 
     private final IBoardingPassRepository repository;
-    // TODO: create this repository
-    private final IUserRepository userRepository;
 
     /**
      * Constructs a new BoardingPassService with the provided boarding pass repository.
@@ -30,7 +31,6 @@ public class BoardingPassService implements IBoardingPassService{
     @Autowired
     public BoardingPassService(IBoardingPassRepository repository) {
         this.repository = repository;
-        this.userRepository = userRepository;
     }
 
     /**
@@ -49,9 +49,10 @@ public class BoardingPassService implements IBoardingPassService{
     @Override
     public ResponseEntity<BoardingPass> createBoardingPass(BoardingPass boardingPass) {
         try {
-            // TODO: change for the user id
+            // Get the passenger ID from the boarding pass
+            int passengerId = boardingPass.getPassenger().getPassengerId();
             // Check if a boarding pass with the given ID already exists
-            if (userRepository.existsById(boardingPass.getPassenger().getPassagerId())) {
+            if (repository.existsByPassengerId(passengerId)) {
                 // Boarding pass already exists, throw HTTP exception
                 throw new DataDuplicatedException("Boarding pass already exists");
             } else {
@@ -75,13 +76,41 @@ public class BoardingPassService implements IBoardingPassService{
     }
 
     /**
-     * Retrieves an existing boarding pass.
+     * Retrieves an existing boarding pass for the given passenger ID, only read method.
      *
-     * @param userId the id of the user.
-     * @return The retrieved boarding pass.
+     * @param passengerId The ID of the passenger to retrieve the boarding pass for.
+     * @return ResponseEntity containing the retrieved boarding pass, or 404 Not Found if not found.
+     * @throws BusinessException          If a data integrity violation or database error occurs.
+     * @throws IllegalArgumentException  If an invalid argument is passed.
+     * @throws ResponseStatusException    If an unexpected error occurs during the operation.
      */
+    @Transactional(readOnly = true)
     @Override
-    public ResponseEntity<BoardingPass> getBoardingPass(int userId) {
-        return null;
+    public ResponseEntity<BoardingPass> getBoardingPass(int passengerId) {
+        try {
+            // Retrieve the boarding pass associated with the passenger ID
+            Optional<BoardingPass> optionalBoardingPass = repository.findById(passengerId);
+            // Check if the boarding pass exists
+            if (optionalBoardingPass.isPresent()) {
+                // Boarding pass found, return it
+                BoardingPass boardingPass = optionalBoardingPass.get();
+                return ResponseEntity.ok(boardingPass);
+            } else {
+                // Boarding pass not found, return a 404 Not Found response
+                return ResponseEntity.notFound().build();
+            }
+        } catch (DataIntegrityViolationException e) {
+            // Handle data integrity violations
+            throw new BusinessException("Data integrity violation");
+        } catch (DataAccessException e) {
+            // Handle database access errors
+            throw new BusinessException("Database error");
+        } catch (IllegalArgumentException e) {
+            // Handle illegal argument exceptions
+            throw new IllegalArgumentException("Invalid argument: " + e.getMessage(), e);
+        }catch (Throwable e) {
+            // Handle unexpected errors
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to retrieve boarding pass", e);
+        }
     }
 }
