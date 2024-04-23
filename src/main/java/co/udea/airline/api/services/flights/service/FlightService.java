@@ -40,6 +40,15 @@ public class FlightService {
         return flightRepository.findById(id).orElse(null);
     }
 
+    public Flight getFlightByFlightNumber(String flightNumber) {
+        List<Flight> flights = flightRepository.findByFlightNumber(flightNumber);
+        if (flights.size() == 0) {
+            return null;
+        } else {
+            return flights.get(0);
+        }
+    }
+
     public List<Flight> getAllFlights() {
         return flightRepository.findAll();
     }

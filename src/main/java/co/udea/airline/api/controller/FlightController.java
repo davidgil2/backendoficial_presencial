@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -73,6 +74,17 @@ public class FlightController {
         if (flight == null) {
             throw new DataNotFoundException("Flight with ID: " + id + " not found");
         }
+        return ResponseEntity.ok(modelMapper.map(flight, FlightDTO.class));
+    }
+
+    @Operation(summary = "Get a flight with filters", description = "Returns only one flight for given filters")
+    @GetMapping("/filter")
+    public ResponseEntity<FlightDTO> getMethodNameByFlightNumber(@RequestParam String flightNumber) {
+        Flight flight = flightService.getFlightByFlightNumber(flightNumber);
+        if (flight == null) {
+            throw new DataNotFoundException("Flight with flight number: " + flightNumber + " not found");
+        }
+
         return ResponseEntity.ok(modelMapper.map(flight, FlightDTO.class));
     }
 
