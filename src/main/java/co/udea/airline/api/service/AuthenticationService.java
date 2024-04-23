@@ -1,17 +1,16 @@
 package co.udea.airline.api.service;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.stereotype.Service;
+
 import co.udea.airline.api.dto.RegisterRequestDTO;
 import co.udea.airline.api.model.jpa.model.security.AuthenticationResponse;
 import co.udea.airline.api.model.jpa.model.security.Person;
-import co.udea.airline.api.model.jpa.repository.security.PersonRepository;
 import co.udea.airline.api.model.jpa.repository.security.IdentificationTypeRepository;
+import co.udea.airline.api.model.jpa.repository.security.PersonRepository;
 import co.udea.airline.api.model.jpa.repository.security.PositionRepository;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AuthenticationService {
@@ -22,7 +21,6 @@ public class AuthenticationService {
 
     private final IdentificationTypeRepository idRepository;
     private final PositionRepository positionRepository;
-    private final AuthenticationManager authenticationManager;
 
     public AuthenticationService(PersonRepository repository,
                                  PasswordEncoder passwordEncoder,
@@ -35,12 +33,13 @@ public class AuthenticationService {
         this.jwtService = jwtService;
         this.idRepository = idRepository;
         this.positionRepository = positionRepository;
-        this.authenticationManager = authenticationManager;
     }
 
-    public Person ExternalRegister(String email, String LoginSource){
+    public Person ExternalRegister(Jwt idToken, String LoginSource){
         Person user=new Person();
-        user.setEmail(email);
+        user.setEmail(idToken.getClaimAsString("email"));
+        user.setFirstName(idToken.getClaimAsString("given_name"));
+        user.setLastName(idToken.getClaimAsString("family_name"));
         user.setExternalLoginSource(LoginSource);
         user.setPositions(positionRepository.findByName("USER"));
         user.setVerified(false);
@@ -77,22 +76,6 @@ public class AuthenticationService {
 
 
         return new AuthenticationResponse(jwt, "User registration was successful");
-
-    }
-
-    public AuthenticationResponse authenticate(Person request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
-
-        Person user = repository.findByEmail(request.getUsername()).orElseThrow();
-        String jwt = jwtService.generateToken(user);
-
-
-        return new AuthenticationResponse(jwt, "User login was successful");
 
     }
 

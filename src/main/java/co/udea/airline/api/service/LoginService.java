@@ -52,7 +52,7 @@ public class LoginService {
                         Jwt token = (Jwt) auth.getPrincipal();
                         Optional<Person> p = personRepository.findByEmail(token.getClaimAsString("email"));
                         if (!p.isPresent()) {
-                                p=Optional.of(authenticationService.ExternalRegister(token.getClaimAsString("email"),"Google"));
+                                p=Optional.of(authenticationService.ExternalRegister(token,"Google"));
                         }
                         return jwtUtils.createToken(p.get());
                 }
