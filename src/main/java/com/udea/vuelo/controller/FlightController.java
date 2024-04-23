@@ -69,14 +69,9 @@ public class FlightController {
     }
 
     @GetMapping("/paymentgateways")
-    public ResponseEntity<String> paymentgateways() {
+    public ResponseEntity<List<String>> paymentgateways() {
         List<String> paymentGateways = Arrays.asList("PayPal", "Pse", "Wompi", "Bancolombia", "GetTrx", "Stripe", "PayU", "Mercadopago");
-
-        StringBuilder response = new StringBuilder();
-        for (String gateway : paymentGateways) {
-            response.append(gateway).append("\n");
-        }
-
-        return ResponseEntity.ok(response.toString());
+        return ResponseEntity.ok(paymentGateways);
     }
+
 }
