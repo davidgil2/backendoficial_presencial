@@ -152,12 +152,13 @@ class FlightControllerTest {
         List<String> expectedGateways = Arrays.asList("PayPal", "Pse", "Wompi", "Bancolombia", "GetTrx", "Stripe", "PayU", "Mercadopago");
 
         // Act
-        ResponseEntity<String> result = flightController.paymentgateways();
+        ResponseEntity<List<String>> result = flightController.paymentgateways();
 
         // Assert
-        assertEquals(String.join("\n", expectedGateways) + "\n", result.getBody());
+        assertEquals(expectedGateways, result.getBody());
         assertEquals(HttpStatus.OK, result.getStatusCode());
     }
+
 
 
 
