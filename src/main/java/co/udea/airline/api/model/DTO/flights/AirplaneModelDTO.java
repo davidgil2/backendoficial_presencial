@@ -17,4 +17,6 @@ public class AirplaneModelDTO {
     private int capacity;
 
     private long cargoCapacity;
+
+    private long volumeCapacity;
 }

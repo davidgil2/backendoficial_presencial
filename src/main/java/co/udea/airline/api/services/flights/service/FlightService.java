@@ -19,6 +19,9 @@ public class FlightService {
     private ScaleService scaleService;
 
     public Flight saveFlight(Flight flight) {
+
+        flight.generateFlightNumber();
+
         Flight flightSaved = flightRepository.save(flight);
 
         Set<Scale> scales = flight.getScales();
@@ -26,6 +29,9 @@ public class FlightService {
             scale.setFlight(flightSaved);
             scaleService.saveScale(scale);
         }
+        
+        flight.generateFlightType();
+        flightSaved = flightRepository.save(flight);
 
         return flightSaved;
     }

@@ -1,6 +1,8 @@
 package co.udea.airline.api.model.DTO.flights;
 
+import co.udea.airline.api.utils.common.FlightTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import jakarta.validation.constraints.*;
 
 import lombok.Data;
@@ -32,6 +34,9 @@ public class FlightDTO {
     @Max(value = 100)
     @Min(value = 0, message = "The surcharge must be greater than 0.")
     private double surcharge;
+
+    @Schema(description = "The type of the flight", requiredMode = RequiredMode.NOT_REQUIRED, example = "Domestic")
+    private FlightTypeEnum flightType = FlightTypeEnum.Domestic;
 
     @Schema(description = "The scales of the flight, the first scale is the origin and the last scale is the destination", required = true, example = "[{ \"airplaneModel\": { \"id\": \"A320-200\" }, \"originAirport\": { \"id\": \"BOG\" }, \"destinationAirport\": { \"id\": \"MDE\" }, \"departureDate\": \"2024-12-30 23:59:59\", \"arrivalDate\": \"2024-12-31 23:59:59\" }]")
     @Size(min = 1, max = 10, message = "The scales must be between 1 and 10 scales.")

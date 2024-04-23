@@ -33,6 +33,9 @@ public class AirplaneModel implements java.io.Serializable {
     @Column(name = "cargo_capacity", precision = 10, scale = 2)
     private long cargoCapacity;
 
+    @Column(name = "volume_capacity", precision = 10, scale = 2)
+    private long volumeCapacity;
+
     @OneToMany(mappedBy = "airplaneModel")
     private Set<Scale> scales = new HashSet<Scale>();
 }
