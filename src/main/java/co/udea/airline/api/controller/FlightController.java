@@ -66,7 +66,7 @@ public class FlightController {
         return ResponseEntity.ok(FlightDTOs);
     }
 
-    @Operation(summary = "Get a Flight", description = "Returns only one flight by id")
+    @Operation(summary = "Get a flight by id", description = "Returns only one flight by id")
     @GetMapping("/{id}")
     public ResponseEntity<FlightDTO> getMethodNameById(@PathVariable long id) {
         Flight flight = flightService.getFlightById(id);
