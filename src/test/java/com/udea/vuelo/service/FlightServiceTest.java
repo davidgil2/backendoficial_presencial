@@ -24,7 +24,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class FlightServiceTest {
+class FlightServiceTest {
 
     private FlightService flightService;
 
@@ -55,12 +55,12 @@ public class FlightServiceTest {
         LocalDate startDate = LocalDate.of(2024, 4, 1);
         LocalDate endDate = LocalDate.of(2024, 4, 10);
 
-        // Mocking the behavior of objectMapperMock
+        // Simular el comportamiento del mock para que devuelva los vuelos esperados cuando se le llame con las fechas de inicio y fin dadas
         try {
             // Mocking the behavior of objectMapperMock
             when(objectMapperMock.readValue(Mockito.any(InputStream.class), Mockito.eq(Flight[].class))).thenReturn(flights);
         } catch (IOException e) {
-            // Handle exception
+            throw new IllegalStateException (e.getMessage(), e);
         }
 
         // Act

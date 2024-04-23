@@ -59,7 +59,7 @@ class FlightControllerTest {
 
         List<List<Flight>> expectedFlights = Arrays.asList(Arrays.asList(flights[0], flights[1]));
 
-        // Configurar el comportamiento del mock para que devuelva los vuelos esperados cuando se le llame con las fechas de inicio y fin proporcionadas.
+        // Simular el comportamiento del mock para que devuelva los vuelos esperados cuando se le llame con las fechas de inicio y fin dadas
         when(flightServiceMock.searchFlightsByDate(LocalDate.parse(startDate), LocalDate.parse(endDate))).thenReturn(expectedFlights);
 
         // Act
