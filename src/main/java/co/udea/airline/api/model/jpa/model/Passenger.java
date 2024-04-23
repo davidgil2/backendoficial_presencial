@@ -17,4 +17,7 @@ public class Passenger {
 
     @Column(name = "PERSON_ID")
     private Long personId;
+
+    @Column(name = "BOOKING_ID")
+    private Long bookingId;
 }

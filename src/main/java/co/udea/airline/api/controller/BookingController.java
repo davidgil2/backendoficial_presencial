@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/booking")
+@CrossOrigin
 public class BookingController {
     @Autowired
     private BookingService bookingService;

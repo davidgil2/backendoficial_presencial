@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/person")
+@CrossOrigin
 public class PersonController {
     @Autowired
     private PersonService personService;

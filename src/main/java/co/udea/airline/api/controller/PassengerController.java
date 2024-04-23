@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/passenger")
+@CrossOrigin
 public class PassengerController {
     @Autowired
     private PassengerService passengerService;
@@ -32,5 +33,15 @@ public class PassengerController {
     @DeleteMapping("/{passengerId}")
     public void deletePassenger(@PathVariable Long passengerId){
         passengerService.delete(passengerId);
+    }
+
+    @GetMapping("/booking/{bookingId}")
+    public List<Passenger> getPassengerByBookingId(@PathVariable Long bookingId) {
+        return passengerService.findByBookingId(bookingId);
+    }
+
+    @GetMapping("/person/{personId}")
+    public List<Passenger> getPassengerByPersonId(@PathVariable Long personId) {
+        return passengerService.findByPersonId(personId);
     }
 }
