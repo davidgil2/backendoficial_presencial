@@ -59,14 +59,14 @@ public class Person implements UserDetails {
     private String province;
     @Column(name = "CITY")
     private String city;
-    @Column(name = "RESIDENCE")
+
     private String address;
     @NotBlank
     @Email
     private String email;
 
     @NotBlank
-    @Column(name = "ACCESS_KEY")
+    @Column
     private String password;
 
     @Column(name = "EXTERNAL_LOGIN_SOURCE")
