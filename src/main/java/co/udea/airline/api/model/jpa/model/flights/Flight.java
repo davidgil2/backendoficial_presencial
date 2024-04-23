@@ -41,7 +41,7 @@ public class Flight {
     @Column(name = "flight_type")
     private FlightTypeEnum flightType = FlightTypeEnum.Domestic;
 
-    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Scale> scales;
 
     public void generateFlightNumber() {
