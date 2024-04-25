@@ -17,8 +17,8 @@ spring:
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:oracle:thin://localhost:1521/airline-dev?serverTimezone=America/Bogota
-    username: username
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    username: system
     password: password
     hikari:
       idle-timeout: 10000

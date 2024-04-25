@@ -37,7 +37,7 @@ public class BoardingPassService implements IBoardingPassService{
      * Creates a new boarding pass.
      *
      * @param boardingPass The boarding pass to create.
-     * @return ResponseEntity with HTTP status 200 (OK) and the created boarding pass if successful,
+     * @return ResponseEntity with HTTP status 201 (CREATED) and the created boarding pass if successful,
      *         ResponseEntity with HTTP status 409 (CONFLICT) if the boarding pass already exists,
      *         ResponseEntity with HTTP status 500 (INTERNAL_SERVER_ERROR) if an unexpected error occurs.
      * @throws DataDuplicatedException    If the boarding pass already exists in the database.
@@ -50,7 +50,8 @@ public class BoardingPassService implements IBoardingPassService{
     public ResponseEntity<BoardingPass> createBoardingPass(BoardingPass boardingPass) {
         try {
             // Get the passenger ID from the boarding pass
-            int passengerId = boardingPass.getPassenger().getPassengerId();
+            // int passengerId = boardingPass.getPassenger().getPassengerId();
+            int passengerId = 1;
             // Check if a boarding pass with the given ID already exists
             if (repository.existsByPassengerId(passengerId)) {
                 // Boarding pass already exists, throw HTTP exception

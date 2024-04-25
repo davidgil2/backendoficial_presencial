@@ -47,6 +47,8 @@ public class BoardingPassController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Boarding pass created", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = BoardingPass.class)) }),
+        @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = StandardResponse.class)) }),
         @ApiResponse(responseCode = "409", description = "Conflict - Boarding pass already exists", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = StandardResponse.class)) }),
         @ApiResponse(responseCode = "500", description = "Internal server error", content = {

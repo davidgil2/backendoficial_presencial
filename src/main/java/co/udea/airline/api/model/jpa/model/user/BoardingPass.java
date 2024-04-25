@@ -10,6 +10,8 @@ import java.sql.Timestamp;
  * Represents Boording Pass information.
  * This class is mapped to the "BOARDING_PASS" table in the database.
  */
+@Getter
+@Setter
 @Entity
 @Data
 @NoArgsConstructor
@@ -24,21 +26,20 @@ public class BoardingPass {
     @Column(name = "BOARDING_PASS_ID")
     private Long boardingPassId;
 
-    // TODO: Create all this models
-    //@ManyToOne
-    //@JoinColumn(name = "passenger_id")
-    //@NonNull
-    //private Passeger passenger;
+    @ManyToOne
+    @JoinColumn(name = "passenger_id")
+    @NonNull
+    private Passeger passenger;
 
     //@ManyToOne
-    //@JoinColumn(name = "booking_id")
-    //@NonNull
-    //private Booking booking;
+    @JoinColumn(name = "booking_id")
+    @NonNull
+    private Booking booking;
 
     //@ManyToOne
-    //@JoinColumn(name = "Flight_ID")
-    //@NonNull
-    // Flight flight;
+    @JoinColumn(name = "Flight_ID")
+    @NonNull
+    private Flight flight;
 
     /**
      * Medical information associated with this boarding pass.
