@@ -1,0 +1,34 @@
+server:
+  ssl:
+    key-store: classpath:codefact.p12
+    key-store-password: ${KEY_STORE_PASSWORD}
+    keyStoreType: PKCS12
+    protocol: TLS
+    enabled-protocols: TLSv1.2
+
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        order_inserts: true
+        dialect: org.hibernate.dialect.OracleDialect
+        jdbc:
+          batch_size: 50
+          lob:
+            non_contextual_creation: true
+        default_schema: ${DB_USERNAME}
+        temp:
+          use_jdbc_metadata_defaults: false
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      idle-timeout: 10000
+      maximum-pool-size: 5
+    driver-class-name: oracle.jdbc.driver.OracleDriver
