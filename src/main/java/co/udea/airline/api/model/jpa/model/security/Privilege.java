@@ -19,7 +19,7 @@ public class Privilege implements GrantedAuthority {
     @Column(name = "PRIVILEGE_ID")
     private Long privilegeId;
 
-    @Column(name = "PRIVILEGE_NAME")
+    @Column(name = "NAME")
     private String name;
 
     @Column(name = "DESCRIPTION")

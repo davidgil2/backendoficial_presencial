@@ -21,7 +21,7 @@ public class Position { // == Role
     @Column(name = "POSITION_ID")
     private Long positionId;
 
-    @Column(name="POSITION_NAME")
+    @Column(name="NAME")
     private String name;
 
     @Column(name="DESCRIPTION")
