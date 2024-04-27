@@ -11,16 +11,15 @@ spring:
           batch_size: 50
           lob:
             non_contextual_creation: true
-        default_schema: public
+        default_schema: ${DB_USERNAME}
         temp:
           use_jdbc_metadata_defaults: false
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    #url: jdbc:oracle:thin://localhost:1521/airline-dev?serverTimezone=America/Bogota
-    url : jdbc:oracle:thin:@localhost:1521/ORCLCDB
-    username: CODE_FACTORY
-    password: CODEFACTORY123
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     hikari:
       idle-timeout: 10000
       maximum-pool-size: 5

@@ -2,13 +2,7 @@
 server:
   servlet:
     context-path: /modulo-19
-  port: 8080
-  ssl:
-    key-store: classpath:codefact.p12
-    key-store-password: 123456
-    keyStoreType: PKCS12
-    protocol: TLS
-    enabled-protocols: TLSv1.2
+  port: 8019
 # Spring properties
 spring:
   # Dev is active by default. This value can be overwritten by java arg param
@@ -17,4 +11,15 @@ spring:
   application:
     name: sitas-api
 
+# OpenAPI properties
+airline-api:
+  openapi:
+    dev-url: http://localhost:8019/modulo-19
+    prod-url: https://codefact.udea.edu.co/modulo-19
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /docs
+    tagsSorter: alpha
