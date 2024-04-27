@@ -9,6 +9,9 @@ import java.util.List;
 @Repository
 public interface IFlightsRepository extends JpaRepository<Flight, Long> {
 
+    @Query("SELECT f FROM Flight f JOIN FETCH f.scales WHERE f.flightNumber = :flightNumber")
+    List<Flight> findByFlightNumber(String flightNumber);
+
     @Query(value = "SELECT " +
             "f.flight_number AS flightNumber, " +
             "f.flight_type AS flightType, " +

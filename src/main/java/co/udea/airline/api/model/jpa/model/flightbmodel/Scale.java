@@ -4,7 +4,6 @@ package co.udea.airline.api.model.jpa.model.flightbmodel;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -33,15 +32,15 @@ public class Scale {
         private Flight flight;
 
         @ManyToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "airplane_model")
+        @JoinColumn(name = "airplane_model", nullable = false)
         private AirplaneModel airplaneModel;
 
         @ManyToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "origin_airport")
+        @JoinColumn(name = "origin_airport", nullable = false)
         private Airport originAirport;
 
         @ManyToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "destination_airport")
+        @JoinColumn(name = "destination_airport", nullable = false)
         private Airport destinationAirport;
 
         @JsonDeserialize(using = LocalDateTimeDeserializer.class)

@@ -1,8 +1,6 @@
 package co.udea.airline.api.model.jpa.model.flightbmodel.DTO;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * Represents an airport data transfer object (DTO).
@@ -11,6 +9,9 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
+@Data
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class AirportDTO {
     /**
      * Unique identifier of the airport (CODE IATA).
