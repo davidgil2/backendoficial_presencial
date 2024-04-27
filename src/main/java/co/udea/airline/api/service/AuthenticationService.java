@@ -1,5 +1,7 @@
 package co.udea.airline.api.service;
-
+import java.util.Optional;
+import co.udea.airline.api.utils.common.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -18,7 +20,7 @@ public class AuthenticationService {
     private final PersonRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-
+    private final JwtUtils jwtUtils;
     private final IdentificationTypeRepository idRepository;
     private final PositionRepository positionRepository;
 
@@ -27,12 +29,14 @@ public class AuthenticationService {
                                  JwtService jwtService,
                                  IdentificationTypeRepository idRepository,
                                  PositionRepository positionRepository,
-                                 AuthenticationManager authenticationManager) {
+                                 AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.idRepository = idRepository;
         this.positionRepository = positionRepository;
+
+        this.jwtUtils = jwtUtils;
     }
 
     public Person ExternalRegister(Jwt idToken, String LoginSource){
@@ -71,8 +75,7 @@ public class AuthenticationService {
         user.setFailedLoginAttempts(0);
         user.setEnabled(true);
         user = repository.save(user);
-
-        String jwt = jwtService.generateToken(user);
+        Jwt jwt = jwtUtils.createToken(user);
 
 
         return new AuthenticationResponse(jwt, "User registration was successful");
