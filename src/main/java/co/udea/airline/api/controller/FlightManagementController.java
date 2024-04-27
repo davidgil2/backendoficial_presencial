@@ -9,6 +9,7 @@ import co.udea.airline.api.services.flightsservices.FlightServices;
 import co.udea.airline.api.model.jpa.model.flightbmodel.Flight;
 
 
+import co.udea.airline.api.utils.exception.DataNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
@@ -34,16 +36,14 @@ public class FlightManagementController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("/search")
-    @Operation(summary = "Search all flights")
+    @GetMapping("/searchsflights")
+    @Operation(summary = "Search all flights with all details")
     @ApiResponse(responseCode = "200", content = {
             @Content(schema = @Schema(implementation = Flight.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
     }, description = "List of flights")
-    @ApiResponse(responseCode = "400", description = "Invalid request")
     @ApiResponse(responseCode = "500", description = "Internal error")
     public List<FlightDTO> searchFlight() {
         List<Flight> flights = flightService.searchFlights();
-
         List<FlightDTO> flightsDTO = flights.stream()
                 .map(flight -> modelMapper.map(flight, FlightDTO.class))
                 .collect(Collectors.toList());
@@ -55,14 +55,13 @@ public class FlightManagementController {
     @ApiResponse(responseCode = "200", content = {
             @Content(schema = @Schema(implementation = Flight.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
     }, description = "List of flights")
-    @ApiResponse(responseCode = "400", description = "Invalid")
     @ApiResponse(responseCode = "500", description = "Internal error")
     public List<IFlightProjection> searchFlightGeneral() {
         return flightService.searchFlightGeneral();
     }
 
     @GetMapping("/searchdetails")
-    @Operation(summary = "Search all flights with details")
+    @Operation(summary = "Search various flights with details by flight Number")
     @ApiResponse(responseCode = "200", content = {
             @Content(schema = @Schema(implementation = Flight.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
     }, description = "List of flights")
@@ -79,7 +78,7 @@ public class FlightManagementController {
      */
     @PostMapping("/add")
     @Operation(summary = "Add a new flight")
-    @ApiResponse(responseCode = "200", content = {
+    @ApiResponse(responseCode = "201", content = {
             @Content(schema = @Schema(implementation = Flight.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
     }, description = "Flight added successfully")
     @ApiResponse(responseCode = "400", description = "Invalid request")
@@ -91,7 +90,7 @@ public class FlightManagementController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @Operation(summary = "Delete a flight")
+    @Operation(summary = "Delete a flight by id")
     @ApiResponse(responseCode = "200", content = {
             @Content(schema = @Schema(implementation = Flight.class), mediaType = MediaType.APPLICATION_JSON_VALUE)
     }, description = "Flight deleted successfully")
@@ -100,6 +99,7 @@ public class FlightManagementController {
     public void deleteFlight(@PathVariable Long id) {
         flightService.deleteFlight(id);
     }
+
 
 
     @GetMapping("/search/{id}")

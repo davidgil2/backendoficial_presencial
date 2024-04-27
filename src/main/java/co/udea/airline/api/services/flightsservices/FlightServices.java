@@ -5,14 +5,13 @@ package co.udea.airline.api.services.flightsservices;
 import co.udea.airline.api.model.jpa.model.flightbmodel.Flight;
 import co.udea.airline.api.model.jpa.model.flightbmodel.Scale;
 
-import co.udea.airline.api.model.jpa.repository.bookingrepository.IBookingRepository;
 import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightDetailsProjection;
 import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightProjection;
 import co.udea.airline.api.model.jpa.repository.flightbrepository.IFlightsRepository;
 
 
 import co.udea.airline.api.model.jpa.repository.flightbrepository.IScaleRespository;
-import co.udea.airline.api.utils.common.DataValidation;
+
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,8 +77,6 @@ public class FlightServices {
 
     public void deleteFlight(Long id) {
         try {
-            DataValidation.valiateBookings(id);
-
             scaleRepository.deleteScaleByFlightId(id);
             flightRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
@@ -100,5 +97,31 @@ public class FlightServices {
         }
         return flightRepository.save(modelMapper.map(flight, Flight.class));
     }
-
+    public Flight getFlightByFlightNumber(String flightNumber) {
+        List<Flight> flights = flightRepository.findByFlightNumber(flightNumber);
+        if (flights.size() == 0) {
+            return null;
+        } else {
+            return flights.get(0);
+        }
+    }
+    public Flight deleteFlightById(Long id) {
+        Flight deletedFlight = getFlightById(id);
+        if (deletedFlight == null) {
+            return null;
+        }
+        flightRepository.deleteById(id);
+        return deletedFlight;
+    }
+    public Flight getFlightById(Long id) {
+        return flightRepository.findById(id).orElse(null);
+    }
+    public Flight deleteFlightByFlightNumber(String flightNumber) {
+        Flight deletedFlight = getFlightByFlightNumber(flightNumber);
+        if (deletedFlight == null) {
+            return null;
+        }
+        deleteFlightById(deletedFlight.getId());
+        return deletedFlight;
+    }
 }
