@@ -25,9 +25,9 @@ spring:
       maximum-pool-size: 5
     driver-class-name: oracle.jdbc.driver.OracleDriver
 airline-api:
-  openapi:
-    dev-url: http://localhost:8080/airline-api
-    prod-url: https://airline-api.com
+  #openapi:
+    #dev-url: http://localhost:8080/airline-api
+    #prod-url: https://airline-api.com
 
 logging:
   level:
