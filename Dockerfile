@@ -15,7 +15,7 @@ COPY --from=build /app/target/airline-api-0.0.1-SNAPSHOT.jar /app/application.ja
 
 EXPOSE 8080
 
-ENV DATABASE_URL=" jdbc:oracle:thin:@localhost:1521/ORCLCDB"
+ENV DATABASE_URL="jdbc:oracle:thin:@192.168.30.68:1521/XEPDB1"
 ENV DATABASE_USERNAME="AIRLINE_ADMIN_B"
 ENV DATABASE_PASSWORD="SITAS"
 
