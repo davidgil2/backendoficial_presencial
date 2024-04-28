@@ -1,6 +1,5 @@
 FROM maven:3.9.6-amazoncorretto-17 AS build
 
-
 WORKDIR /app
 
 COPY . /app
@@ -13,14 +12,9 @@ WORKDIR /app
 
 COPY --from=build /app/target/airline-api-0.0.1-SNAPSHOT.jar /app/application.jar
 
-EXPOSE 8080
-
-ENV DATABASE_URL="jdbc:oracle:thin:@192.168.30.68:1521/XEPDB1"
-ENV DATABASE_USERNAME="AIRLINE_ADMIN_B"
-ENV DATABASE_PASSWORD="SITAS"
+EXPOSE 8019
 
 CMD ["java", "-jar", "application.jar"]
-
 
 
 
