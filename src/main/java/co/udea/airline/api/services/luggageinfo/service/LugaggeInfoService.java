@@ -21,7 +21,7 @@ public class LugaggeInfoService implements ILugaggeInfoService {
     public ResponseEntity<LuggageInfo> saveLuggageInfo(LuggageInfo lugageInfo){
         try {
             LuggageInfo dbObj = repository.save(lugageInfo);
-            return dbObj;
+            return ResponseEntity.ok(dbObj);
         } catch (DataDuplicatedException e) {
             throw new DataDuplicatedException("");
         }

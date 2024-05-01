@@ -24,8 +24,8 @@ public interface IBoardingPassMapper {
      * @param boardingPass The BoardingPass entity to be mapped.
      * @return The mapped BoardingPassDTO.
      */
-    @Mapping(target = "passengerId", source = "passenger.id")
-    BoardingPassDTO boardingPassToBoardingPassDTO(BoardingPass boardingPass);
+//    @Mapping(target = "passengerId", source = "passenger.id")
+//    BoardingPassDTO boardingPassToBoardingPassDTO(BoardingPass boardingPass);
 
     /**
      * Maps a BoardingPassDTO to a BoardingPass entity.
@@ -33,7 +33,7 @@ public interface IBoardingPassMapper {
      * @param boardingPassDTO The BoardingPassDTO to be mapped.
      * @return The mapped BoardingPass entity.
      */
-    @Mapping(target = "passenger.id", source = "passengerId")
-    BoardingPass boardingPassDTOToBoardingPass(BoardingPassDTO boardingPassDTO);
+//    @Mapping(target = "passenger.id", source = "passengerId")
+//    BoardingPass boardingPassDTOToBoardingPass(BoardingPassDTO boardingPassDTO);
 }
 

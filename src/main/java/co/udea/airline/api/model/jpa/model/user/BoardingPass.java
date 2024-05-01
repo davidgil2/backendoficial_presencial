@@ -25,7 +25,7 @@ public class BoardingPass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BOARDING_PASS_ID")
     private Long boardingPassId;
-
+/*
     @ManyToOne
     @JoinColumn(name = "passenger_id")
     @NonNull
@@ -40,7 +40,7 @@ public class BoardingPass {
     @JoinColumn(name = "Flight_ID")
     @NonNull
     private Flight flight;
-
+*/
     /**
      * Medical information associated with this boarding pass.
      * Represents a many-to-one relationship with the MedicalInfo entity.
