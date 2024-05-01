@@ -1,4 +1,4 @@
-package co.udea.airline.api.utils.config.security;
+package co.udea.airline.api.utils.config;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;

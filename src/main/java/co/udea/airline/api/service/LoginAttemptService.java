@@ -1,4 +1,4 @@
-package co.udea.airline.api.services;
+package co.udea.airline.api.service;
 
 import java.util.Optional;
 

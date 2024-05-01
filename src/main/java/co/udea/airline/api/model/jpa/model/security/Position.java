@@ -21,10 +21,10 @@ public class Position { // == Role
     @Column(name = "POSITION_ID")
     private Long positionId;
 
-    @Column
+    @Column(name="NAME")
     private String name;
 
-    @Column
+    @Column(name="DESCRIPTION")
     private String description;
 
     @ManyToMany

@@ -1,14 +1,11 @@
 package co.udea.airline.api.model.jpa.repository.security;
 
-import java.util.Optional;
-
+import co.udea.airline.api.model.jpa.model.security.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import co.udea.airline.api.model.jpa.model.security.Person;
-
+import java.util.Optional;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
-    
+
     Optional<Person> findByEmail(String email);
-    
 }

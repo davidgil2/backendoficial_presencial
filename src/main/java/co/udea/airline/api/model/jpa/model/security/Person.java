@@ -20,9 +20,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,23 +33,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name="PERSON")
 public class Person implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PERSON_ID") // TODO: create name conversion strategy
-    private Long personId;
+    private Integer personId;
 
     @OneToOne
-    @NotNull
     @JoinColumn(name = "ID_IDENTIFICATION_TYPE")
     private IdentificationType identificationType;
 
-    @NotBlank
+
     @Column(name = "IDENTIFICATION_NUMBER")
     private String identificationNumber;
 
-    @NotBlank
     @Column(name = "FIRST_NAME")
     private String firstName;
 
@@ -63,16 +61,20 @@ public class Person implements UserDetails {
 
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
-
+    @Column(name = "COUNTRY")
     private String country;
+    @Column(name = "PROVINCE")
     private String province;
+    @Column(name = "CITY")
     private String city;
+    @Column(name = "ADDRESS")
     private String address;
-
-    @Email
+    
     @NotBlank
+    @Email
     private String email;
-
+    
+    @Column(name = "PASSWORD")
     private String password;
 
     @Column(name = "EXTERNAL_LOGIN_SOURCE")

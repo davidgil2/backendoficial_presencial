@@ -1,4 +1,4 @@
-package co.udea.airline.api.utils.config.security;
+package co.udea.airline.api.utils.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
@@ -9,13 +9,9 @@ import org.springframework.security.authentication.DefaultAuthenticationEventPub
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
-
-import co.udea.airline.api.model.jpa.repository.security.PersonRepository;
 
 @Configuration
 public class AuthenticationConfig {
@@ -33,16 +29,6 @@ public class AuthenticationConfig {
         return manager;
     }
 
-    @Bean
-    UserDetailsService userDetailsService(PersonRepository personRepository) {
-        return username -> personRepository.findByEmail(username) // same as email
-                .orElseThrow(() -> new UsernameNotFoundException(
-                        "user with email '%s' not found".formatted(username)));
-    }
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
 }

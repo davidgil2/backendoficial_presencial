@@ -3,7 +3,6 @@ package co.udea.airline.api.controller;
 import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.udea.airline.api.dto.JWTResponseDTO;
 import co.udea.airline.api.dto.LoginRequestDTO;
 import co.udea.airline.api.dto.OAuth2LoginRequestDTO;
-import co.udea.airline.api.services.LoginService;
+import co.udea.airline.api.service.LoginService;
 import co.udea.airline.api.utils.common.StandardResponse;
 
 @RestController
@@ -31,19 +30,26 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<StandardResponse<JWTResponseDTO>> login(@RequestBody LoginRequestDTO loginRequest) {
 
+        StandardResponse<JWTResponseDTO> sr = new StandardResponse<>();
+
         try {
 
             Jwt jwt = loginService.authenticateUser(loginRequest.email(), loginRequest.password());
-            JWTResponseDTO response = new JWTResponseDTO(jwt.getSubject(),
-                    jwt.getExpiresAt().atZone(ZoneId.systemDefault()).toLocalDate(),
-                    jwt.getTokenValue());
-            return ResponseEntity.ok()
-                    .body(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK, response));
+            sr.setStatus(0);
+            sr.setMessage("success");
+            sr.setBody(new JWTResponseDTO(jwt.getSubject(), jwt.getExpiresAt().atZone(ZoneId.systemDefault()),
+                    jwt.getTokenValue()));
+
+            return ResponseEntity.ok().body(sr);
 
         } catch (AuthenticationException exception) {
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new StandardResponse<>(
-                    StandardResponse.StatusStandardResponse.ERROR, "incorrect username or password"));
+            sr.setStatus(1);
+            sr.setMessage("incorrect email or password");
+            sr.setDevMesssage(exception.getMessage());
+            sr.setBody(null);
+
+            return ResponseEntity.badRequest().body(sr);
 
         }
     }
@@ -51,24 +57,29 @@ public class LoginController {
     @PostMapping("/login/google")
     public ResponseEntity<StandardResponse<JWTResponseDTO>> loginWithOauth2(
             @RequestBody OAuth2LoginRequestDTO loginRequest) {
+
+        StandardResponse<JWTResponseDTO> sr = new StandardResponse<>();
+
         try {
 
             Jwt jwt = loginService.authenticateIdToken(loginRequest.idToken());
-            JWTResponseDTO response = new JWTResponseDTO(jwt.getSubject(),
-                    jwt.getExpiresAt().atZone(ZoneId.systemDefault()).toLocalDate(),
-                    jwt.getTokenValue());
-            return ResponseEntity.ok()
-                    .body(new StandardResponse<>(StandardResponse.StatusStandardResponse.OK, response));
-
-        } catch (UsernameNotFoundException exception) {
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new StandardResponse<>(StandardResponse.StatusStandardResponse.ERROR, "user not found"));
+            sr.setStatus(0);
+            sr.setMessage("success");
+            sr.setBody(new JWTResponseDTO(jwt.getSubject(), jwt.getExpiresAt().atZone(ZoneId.systemDefault()),
+                    jwt.getTokenValue()));
+            return ResponseEntity.ok().body(sr);
 
         } catch (AuthenticationException exception) {
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new StandardResponse<>(StandardResponse.StatusStandardResponse.ERROR, "invalid jwt"));
+            sr.setStatus(1);
+            sr.setMessage("authentication error");
+            sr.setDevMesssage(exception.getMessage());
+
+            if (exception instanceof UsernameNotFoundException) {
+                return ResponseEntity.badRequest().body(sr);
+            } else {
+                return ResponseEntity.internalServerError().body(sr);
+            }
 
         }
     }
