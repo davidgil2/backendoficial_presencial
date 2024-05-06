@@ -23,7 +23,11 @@ public class PersonController {
         return personService.getPerson(personId);
     }
 
+<<<<<<< HEAD
     @PostMapping("/person")
+=======
+    @PostMapping("person")
+>>>>>>> 0e174b8491e87f11c2c6fb34a74f29fbb329c496
     public void savePerson(@RequestBody Person person) {
         personService.saveOrUpdate(person);
     }
