@@ -20,6 +20,8 @@ public class BookingService {
         return bookingRepository.findById(id);
     }
 
+    public Optional<Booking> getBookingByFilghtId(Long flightId){return bookingRepository.findById(flightId);}
+
     public void saveOrUpdate(Booking booking){
         bookingRepository.save(booking);
     }

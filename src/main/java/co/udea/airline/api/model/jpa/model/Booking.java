@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -18,8 +19,8 @@ public class Booking {
     private Long bookingId;
 
     @ManyToOne
-    @JoinColumn(name = "PASSENGER_ID")
-    private Passenger passenger;
+    @JoinColumn(name = "FLIGHT_ID")
+    private Flight flight;
 
     @Column(name = "BOOKING_DATE")
     private Date booking_date;

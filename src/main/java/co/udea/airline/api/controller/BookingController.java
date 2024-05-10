@@ -2,6 +2,7 @@ package co.udea.airline.api.controller;
 
 import co.udea.airline.api.model.jpa.model.Booking;
 import co.udea.airline.api.service.BookingService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,11 +11,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/booking")
+@Tag(name = "Bookings")
 public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @GetMapping("/bookings")
+    @GetMapping("/searchBookings")
     public List<Booking> getBookings() {
         return bookingService.getBookings();
     }
@@ -22,6 +24,11 @@ public class BookingController {
     @GetMapping("/{bookingId}")
     public Optional<Booking> getBookingById(@PathVariable Long bookingId) {
         return bookingService.getBooking(bookingId);
+    }
+
+    @GetMapping("/{flightId}")
+    public Optional<Booking> getBookingByFlightId(@PathVariable Long flightId) {
+        return  bookingService.getBookingByFilghtId(flightId);
     }
 
     @PostMapping("/booking")

@@ -1,6 +1,7 @@
 package co.udea.airline.api.controller;
 import co.udea.airline.api.model.jpa.model.Person;
 import co.udea.airline.api.service.PersonService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/person")
+@Tag(name = "Person")
 public class PersonController {
     @Autowired
     private PersonService personService;
@@ -23,11 +25,7 @@ public class PersonController {
         return personService.getPerson(personId);
     }
 
-<<<<<<< HEAD
     @PostMapping("/person")
-=======
-    @PostMapping("person")
->>>>>>> 0e174b8491e87f11c2c6fb34a74f29fbb329c496
     public void savePerson(@RequestBody Person person) {
         personService.saveOrUpdate(person);
     }

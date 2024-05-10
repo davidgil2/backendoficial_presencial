@@ -1,13 +1,14 @@
 package co.udea.airline.api.model.jpa.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Data
 @Entity
 public class Person {
@@ -16,6 +17,9 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PERSON_ID") // TODO: create name conversion strategy
     private Long personId;
+
+    @Column(name = "ID_IDENTIFICATION_TYPE")
+    private String identificationType;
 
     @Column(name = "IDENTIFICATION_NUMBER")
     private String id_number;
@@ -37,9 +41,8 @@ public class Person {
     private String country;
     private String province;
     private String city;
-    private String residence;
 
-    private String email;
+    private String mail;
 
     @Column(name = "ACCESS_KEY")
     private String password;
