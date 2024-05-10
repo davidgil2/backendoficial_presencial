@@ -1,6 +1,5 @@
 package co.udea.airline.api.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
@@ -16,20 +15,24 @@ import co.udea.airline.api.utils.exception.RegisterException;
 @Service
 public class RegisterService {
 
-    @Autowired
-    private PersonRepository repository;
+    private final PersonRepository repository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
-    @Autowired
-    private IdentificationTypeRepository idRepository;
+    private final IdentificationTypeRepository idRepository;
 
-    @Autowired
-    private PositionRepository positionRepository;
+    private final PositionRepository positionRepository;
+
+    public RegisterService(PersonRepository repository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils,
+            IdentificationTypeRepository idRepository, PositionRepository positionRepository) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
+        this.idRepository = idRepository;
+        this.positionRepository = positionRepository;
+    }
 
     /**
      * Creates a new person in the database using the idToken

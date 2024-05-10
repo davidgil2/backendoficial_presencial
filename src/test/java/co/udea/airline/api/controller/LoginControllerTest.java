@@ -97,7 +97,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void validUser() throws JsonProcessingException, Exception {
+    void validUser() throws JsonProcessingException, Exception {
         LoginRequestDTO loginRequest = new LoginRequestDTO("user@test.co", "pass123");
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -109,7 +109,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void invalidPassword() throws JsonProcessingException, Exception {
+    void invalidPassword() throws JsonProcessingException, Exception {
         LoginRequestDTO loginRequest = new LoginRequestDTO("user@test.co", "invalid_pass");
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -123,7 +123,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void validIdToken() throws JsonProcessingException, Exception {
+    void validIdToken() throws JsonProcessingException, Exception {
 
         OAuth2LoginRequestDTO validIdToken = new OAuth2LoginRequestDTO(
                 "validHeader.validPayload.validSignature");
@@ -157,7 +157,7 @@ public class LoginControllerTest {
     }
 
     @Test
-    public void invalidIdToken() throws JsonProcessingException, Exception {
+    void invalidIdToken() throws JsonProcessingException, Exception {
         OAuth2LoginRequestDTO invalidIdToken = new OAuth2LoginRequestDTO("invaliddd.id.tokennn");
 
         // simulates that the token's validation throws an exception

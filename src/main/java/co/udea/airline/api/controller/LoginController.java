@@ -2,7 +2,6 @@ package co.udea.airline.api.controller;
 
 import java.time.ZoneId;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -21,16 +20,18 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 public class LoginController {
 
-    @Autowired
-    LoginService loginService;
+    final LoginService loginService;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    final PasswordEncoder passwordEncoder;
+
+    public LoginController(LoginService loginService, PasswordEncoder passwordEncoder) {
+        this.loginService = loginService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostMapping("/login")
     @Operation(summary = "authenticates a user with its email and raw password")
@@ -39,10 +40,8 @@ public class LoginController {
                     @ExampleObject(value = "{\"email\": \"john.doe@example.com\", \"password\":\"example_password\"}")
             })
     })
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "login succeded"),
-            @ApiResponse(responseCode = "400", description = "incorrect email or password")
-    })
+    @ApiResponse(responseCode = "200", description = "login succeded")
+    @ApiResponse(responseCode = "400", description = "incorrect email or password")
     public ResponseEntity<StandardResponse<JWTResponseDTO>> login(@RequestBody LoginRequestDTO loginRequest) {
 
         StandardResponse<JWTResponseDTO> sr = new StandardResponse<>();
@@ -71,10 +70,8 @@ public class LoginController {
 
     @PostMapping("/login/google")
     @Operation(summary = "through a google idToken allows to authenticate a user, and in case it does not exist, the same is registered")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "the user was authenticated or registerd using the google idToken"),
-            @ApiResponse(responseCode = "500", description = "an internal exception ocurred when processing the request")
-    })
+    @ApiResponse(responseCode = "200", description = "the user was authenticated or registerd using the google idToken")
+    @ApiResponse(responseCode = "500", description = "an internal exception ocurred when processing the request")
     public ResponseEntity<StandardResponse<JWTResponseDTO>> loginWithOauth2(
             @RequestBody OAuth2LoginRequestDTO loginRequest) {
 

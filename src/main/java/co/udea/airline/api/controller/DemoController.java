@@ -2,7 +2,6 @@ package co.udea.airline.api.controller;
 
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,8 +17,11 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 @RestController
 public class DemoController {
 
-    @Autowired
-    JwtUtils jwtUtils;
+    final JwtUtils jwtUtils;
+
+    public DemoController(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
 
     @GetMapping("/demo")
     @Operation(summary = "this is a demostration of a secured endpoint where only users with the role 'USER' can use it")
@@ -30,7 +32,8 @@ public class DemoController {
 
         return ResponseEntity
                 .ok("Hello from secured url, your roles are: %s"
-                        .formatted(jwtUtils.getRoles(jwt).stream().collect(Collectors.joining(","))));
+                        .formatted(jwtUtils.getRoles(jwt).stream()
+                                .collect(Collectors.joining(","))));
     }
 
     @GetMapping("/admin_only")
@@ -42,6 +45,7 @@ public class DemoController {
 
         return ResponseEntity.ok().header("token", jwt.getTokenValue())
                 .body("Hello from admin only url, your roles are: %s"
-                        .formatted(jwtUtils.getRoles(jwt).stream().collect(Collectors.joining(", "))));
+                        .formatted(jwtUtils.getRoles(jwt).stream()
+                                .collect(Collectors.joining(", "))));
     }
 }
