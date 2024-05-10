@@ -19,7 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -40,7 +40,7 @@ public class Person implements UserDetails {
     @Column(name = "PERSON_ID") // TODO: create name conversion strategy
     private Integer personId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "ID_IDENTIFICATION_TYPE")
     private IdentificationType identificationType;
 
