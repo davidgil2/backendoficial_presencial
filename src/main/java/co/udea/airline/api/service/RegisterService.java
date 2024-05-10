@@ -69,21 +69,21 @@ public class RegisterService {
     public Jwt register(RegisterRequestDTO request) throws RegisterException {
 
         // check if user already exist. if exist than authenticate the user
-        if (repository.findByEmail(request.email()).isPresent()) {
+        if (repository.findByEmail(request.getEmail()).isPresent()) {
             throw new RegisterException("User already exist");
         }
 
         Person user = new Person();
-        user.setFirstName(request.firstName());
-        user.setLastName(request.lastName());
-        user.setEmail(request.email());
-        user.setPassword(passwordEncoder.encode(request.password()));
-        user.setIdentificationNumber(request.idNumber());
-        user.setIdentificationType(idRepository.findByIdentificationType(request.idType()));
-        user.setCity(request.city());
-        user.setCountry(request.country());
-        user.setPhoneNumber(request.phoneNumber());
-        user.setGenre(request.genre());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setIdentificationNumber(request.getIdNumber());
+        user.setIdentificationType(idRepository.findByIdentificationType(request.getIdType()));
+        user.setCity(request.getCity());
+        user.setCountry(request.getCountry());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setGenre(request.getGenre());
         user.setPositions(positionRepository.findByName("USER"));
         user.setVerified(false);
         user.setFailedLoginAttempts(0);

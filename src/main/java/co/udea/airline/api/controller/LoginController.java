@@ -17,8 +17,12 @@ import co.udea.airline.api.dto.LoginRequestDTO;
 import co.udea.airline.api.dto.OAuth2LoginRequestDTO;
 import co.udea.airline.api.service.LoginService;
 import co.udea.airline.api.utils.common.StandardResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
+@Tag(name = "Login", description = "Basic login and google login")
 public class LoginController {
 
     @Autowired
@@ -28,13 +32,16 @@ public class LoginController {
     PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
+    @Operation(summary = "authenticates a user with its email and raw password")
+    @ApiResponse(responseCode = "200", description = "login succeded")
+    @ApiResponse(responseCode = "400", description = "incorrect email or password")
     public ResponseEntity<StandardResponse<JWTResponseDTO>> login(@RequestBody LoginRequestDTO loginRequest) {
 
         StandardResponse<JWTResponseDTO> sr = new StandardResponse<>();
 
         try {
 
-            Jwt jwt = loginService.authenticateUser(loginRequest.email(), loginRequest.password());
+            Jwt jwt = loginService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
             sr.setStatus(0);
             sr.setMessage("success");
             sr.setBody(new JWTResponseDTO(jwt.getSubject(), jwt.getExpiresAt().atZone(ZoneId.systemDefault()),
@@ -62,7 +69,7 @@ public class LoginController {
 
         try {
 
-            Jwt jwt = loginService.authenticateIdToken(loginRequest.idToken());
+            Jwt jwt = loginService.authenticateIdToken(loginRequest.getIdToken());
             sr.setStatus(0);
             sr.setMessage("success");
             sr.setBody(new JWTResponseDTO(jwt.getSubject(), jwt.getExpiresAt().atZone(ZoneId.systemDefault()),

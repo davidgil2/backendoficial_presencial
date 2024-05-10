@@ -13,8 +13,10 @@ import co.udea.airline.api.dto.RegisterRequestDTO;
 import co.udea.airline.api.service.RegisterService;
 import co.udea.airline.api.utils.common.StandardResponse;
 import co.udea.airline.api.utils.exception.RegisterException;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
+@Tag(name = "Signup", description = "Users creation endpoint")
 public class RegisterController {
 
     private final RegisterService authService;
