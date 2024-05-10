@@ -5,3 +5,16 @@ spring:
     active: dev
   application:
     name: SITAS
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: AirlineApiApplication
