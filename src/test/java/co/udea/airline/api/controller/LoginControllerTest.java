@@ -62,7 +62,7 @@ class LoginControllerTest {
     PersonRepository personRepository;
 
     ObjectMapper om = new ObjectMapper();
-    Person personToTest = new Person();
+    Person personToTest;
 
     @BeforeEach
     public void setup() {
@@ -74,16 +74,18 @@ class LoginControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON))
                 .build();
 
-        personToTest.setEmail("user@test.co");
-        personToTest.setPassword(passwordEncoder.encode("pass123"));
-        personToTest.setIdentificationType(new IdentificationType(0L, "DNI"));
-        personToTest.setIdentificationNumber("123456789");
-        personToTest.setFirstName("user");
-        personToTest.setPositions(Arrays.asList(
-                new Position(0L, "USER", "Default user", new ArrayList<Privilege>())));
-        personToTest.setVerified(true);
-        personToTest.setEnabled(true);
-        personToTest.setFailedLoginAttempts(0);
+        personToTest = Person.builder()
+                .email("user@test.co")
+                .password(passwordEncoder.encode("pass123"))
+                .identificationType(new IdentificationType(0L, "DNI"))
+                .identificationNumber("123456789")
+                .firstName("user")
+                .positions(Arrays.asList(
+                        new Position(0L, "USER", "Default user", new ArrayList<Privilege>())))
+                .verified(true)
+                .enabled(true)
+                .failedLoginAttempts(0)
+                .build();
 
         when(personRepository.findByEmail(anyString()))
                 .then(invocation -> {
