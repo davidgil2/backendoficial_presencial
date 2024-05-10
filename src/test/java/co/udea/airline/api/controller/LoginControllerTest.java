@@ -1,6 +1,6 @@
 package co.udea.airline.api.controller;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -45,7 +45,7 @@ import co.udea.airline.api.model.jpa.repository.security.PersonRepository;
 @SpringBootTest
 @WebAppConfiguration
 @Profile("test")
-public class LoginControllerTest {
+class LoginControllerTest {
 
     MockMvc mockMvc;
 
@@ -131,7 +131,7 @@ public class LoginControllerTest {
         // simulates that the token's validation went okay
         when(googleJwtDecoder.decode(anyString())).then(invocation -> {
             String token = invocation.getArgument(0);
-            assertTrue(token.equals(validIdToken.idToken()));
+            assertEquals(validIdToken.idToken(), token);
             Map<String, Object> claims = new HashMap<>() {
                 {
                     put("sub", Long.toString(anyLong()));

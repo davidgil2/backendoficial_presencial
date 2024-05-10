@@ -80,9 +80,7 @@ public class LoginService {
             Jwt token = (Jwt) auth.getPrincipal();
 
             Optional<Person> p = personRepository.findByEmail(token.getClaimAsString("email"));
-
-            // if the person doesn't exist in the db, calls authenticationService to
-            // register the person;
+            
             if (!p.isPresent()) {
                 return authenticationService.externalRegister(token, "Google");
             }
