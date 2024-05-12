@@ -26,20 +26,20 @@ spring:
           batch_size: 50
           lob:
             non_contextual_creation: true
-        default_schema: SYSTEM
+        default_schema: ${ORACLE_USR}
         temp:
           use_jdbc_metadata_defaults: false
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:oracle:thin:@192.168.30.68:1521/xe
-    username: SYSTEM
-    password: F4br1c43sc23l4
+    url: ${ORACLE_URL}
+    username: ${ORACLE_USR}
+    password: ${ORACLE_PWD}
     driver-class-name: oracle.jdbc.driver.OracleDriver
 airline-api:
   openapi:
     dev-url: https://codefact.udea.edu.co/modulo-02/
-    prod-url: https://codefact.udea.edu.co/modulo-02
+    prod-url: https://codefact.udea.edu.co/modulo-02/
 
 logging:
   level:

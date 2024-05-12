@@ -133,7 +133,7 @@ class LoginControllerTest {
         // simulates that the token's validation went okay
         when(googleJwtDecoder.decode(anyString())).then(invocation -> {
             String token = invocation.getArgument(0);
-            assertEquals(validIdToken.idToken(), token);
+            assertEquals(validIdToken.getIdToken(), token);
             Map<String, Object> claims = new HashMap<>() {
                 {
                     put("sub", Long.toString(anyLong()));

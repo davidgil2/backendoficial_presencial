@@ -2,6 +2,7 @@ package co.udea.airline.api.controller;
 
 import java.time.ZoneId;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.udea.airline.api.dto.JWTResponseDTO;
@@ -17,11 +19,12 @@ import co.udea.airline.api.dto.OAuth2LoginRequestDTO;
 import co.udea.airline.api.service.LoginService;
 import co.udea.airline.api.utils.common.StandardResponse;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
+@Tag(name = "Login", description = "Basic login and google login")
+@RequestMapping(path = "/login", consumes = { MediaType.APPLICATION_JSON_VALUE })
 public class LoginController {
 
     final LoginService loginService;
@@ -33,13 +36,8 @@ public class LoginController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/login")
+    @PostMapping("")
     @Operation(summary = "authenticates a user with its email and raw password")
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(content = {
-            @Content(examples = {
-                    @ExampleObject(value = "{\"email\": \"john.doe@example.com\", \"password\":\"example_password\"}")
-            })
-    })
     @ApiResponse(responseCode = "200", description = "login succeded")
     @ApiResponse(responseCode = "400", description = "incorrect email or password")
     public ResponseEntity<StandardResponse<JWTResponseDTO>> login(@RequestBody LoginRequestDTO loginRequest) {
@@ -48,7 +46,7 @@ public class LoginController {
 
         try {
 
-            Jwt jwt = loginService.authenticateUser(loginRequest.email(), loginRequest.password());
+            Jwt jwt = loginService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
             sr.setStatus(0);
             sr.setMessage("success");
             sr.setBody(new JWTResponseDTO(jwt.getSubject(), jwt.getExpiresAt().atZone(ZoneId.systemDefault()),
@@ -68,7 +66,7 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/login/google")
+    @PostMapping("/google")
     @Operation(summary = "through a google idToken allows to authenticate a user, and in case it does not exist, the same is registered")
     @ApiResponse(responseCode = "200", description = "the user was authenticated or registerd using the google idToken")
     @ApiResponse(responseCode = "500", description = "an internal exception ocurred when processing the request")
@@ -79,7 +77,7 @@ public class LoginController {
 
         try {
 
-            Jwt jwt = loginService.authenticateIdToken(loginRequest.idToken());
+            Jwt jwt = loginService.authenticateIdToken(loginRequest.getIdToken());
             sr.setStatus(0);
             sr.setMessage("success");
             sr.setBody(new JWTResponseDTO(jwt.getSubject(), jwt.getExpiresAt().atZone(ZoneId.systemDefault()),

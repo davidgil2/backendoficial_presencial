@@ -5,3 +5,19 @@ spring:
     active: dev
   application:
     name: SITAS
+  data:
+    rest:
+      detection-strategy: annotated
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: SITAS-API

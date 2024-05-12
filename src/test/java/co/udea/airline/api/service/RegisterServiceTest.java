@@ -36,7 +36,7 @@ class RegisterServiceTest {
         RegisterRequestDTO request = new RegisterRequestDTO("CC", "12345678", "John", "Doe", 'M',
                 LocalDate.of(1990, 1, 1), "555-1234", "Colombia", "Bogota", "Bogota", "Colombia", "test@example.com",
                 "password");
-        when(repository.findByEmail(request.email())).thenReturn(Optional.of(new Person()));
+        when(repository.findByEmail(request.getEmail())).thenReturn(Optional.of(new Person()));
 
         // Assert
         RegisterException thrown = assertThrowsExactly(RegisterException.class, () -> {

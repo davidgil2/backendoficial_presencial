@@ -13,8 +13,10 @@ import co.udea.airline.api.utils.common.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
+@Tag(name = "Authorization demos", description = "Basic authorization filter for user and admin roles")
 public class DemoController {
 
     final JwtUtils jwtUtils;
