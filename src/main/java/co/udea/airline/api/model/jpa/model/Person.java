@@ -1,4 +1,4 @@
-package co.udea.airline.api.model.jpa.model.security;
+package co.udea.airline.api.model.jpa.model;
 
 import java.time.LocalDate;
 import java.util.Collection;

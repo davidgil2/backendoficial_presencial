@@ -1,4 +1,4 @@
-package co.udea.airline.api.model.jpa.model.security;
+package co.udea.airline.api.model.jpa.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

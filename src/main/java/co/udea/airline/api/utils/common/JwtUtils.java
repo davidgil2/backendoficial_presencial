@@ -15,9 +15,9 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Component;
 
-import co.udea.airline.api.model.jpa.model.security.Person;
-import co.udea.airline.api.model.jpa.model.security.Position;
-import co.udea.airline.api.model.jpa.model.security.Privilege;
+import co.udea.airline.api.model.jpa.model.Person;
+import co.udea.airline.api.model.jpa.model.Position;
+import co.udea.airline.api.model.jpa.model.Privilege;
 
 @Component
 public class JwtUtils {

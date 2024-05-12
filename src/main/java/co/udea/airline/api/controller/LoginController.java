@@ -3,6 +3,7 @@ package co.udea.airline.api.controller;
 import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.BasePathAwareController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,7 +23,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Tag(name = "Login", description = "Basic login and google login")
+@Tag(name = "2. Login", description = "Basic login and google login")
+@BasePathAwareController
 public class LoginController {
 
     @Autowired

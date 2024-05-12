@@ -21,3 +21,7 @@ management:
   metrics:
     tags:
       application: SITAS-API
+springdoc:
+  swagger-ui:
+    tags-sorter: alpha
+    path: /docs
