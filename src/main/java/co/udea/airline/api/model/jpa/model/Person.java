@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="PERSON")
+@Table(name = "PERSON")
 public class Person implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,6 @@ public class Person implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "ID_IDENTIFICATION_TYPE")
     private IdentificationType identificationType;
-
 
     @Column(name = "IDENTIFICATION_NUMBER")
     private String identificationNumber;
@@ -69,11 +68,11 @@ public class Person implements UserDetails {
     private String city;
     @Column(name = "ADDRESS")
     private String address;
-    
+
     @NotBlank
     @Email
     private String email;
-    
+
     @Column(name = "PASSWORD")
     private String password;
 
