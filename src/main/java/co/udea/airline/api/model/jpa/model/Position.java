@@ -1,5 +1,6 @@
 package co.udea.airline.api.model.jpa.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "POSITION", uniqueConstraints = @UniqueConstraint(columnNames = "NAME"))
-public class Position { // == Role
+public class Position implements Serializable { // == Role
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

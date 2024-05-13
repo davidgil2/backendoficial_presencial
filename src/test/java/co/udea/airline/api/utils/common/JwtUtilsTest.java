@@ -22,7 +22,7 @@ import co.udea.airline.api.model.jpa.model.Position;
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
 @Profile("test")
-public class JwtUtilsTest {
+class JwtUtilsTest {
 
     @Autowired
     JwtUtils jwtUtils;

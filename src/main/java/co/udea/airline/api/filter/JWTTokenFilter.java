@@ -33,7 +33,7 @@ public class JWTTokenFilter extends OncePerRequestFilter {
     }
 
     private Jwt superAdminToken;
-    private String ENCRYPTED_SUPER_ADMIN_TOKEN = System.getenv("SUPER_ADMIN_TOKEN");
+    private final String ENCRYPTED_SUPER_ADMIN_TOKEN = System.getenv("SUPER_ADMIN_TOKEN");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

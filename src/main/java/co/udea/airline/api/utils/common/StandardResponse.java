@@ -11,11 +11,11 @@ public class StandardResponse<T> {
     }
 
     public static <T> StandardResponse<T> ok(T body) {
-        return new StandardResponse<T>(0, "success", null, body);
+        return new StandardResponse<>(0, "success", null, body);
     }
 
     public static <T> StandardResponse<T> error(String error) {
-        return new StandardResponse<T>(0, "error", error, null);
+        return new StandardResponse<>(0, "error", error, null);
     }
 
     public StandardResponse(StatusStandardResponse status, T body) {

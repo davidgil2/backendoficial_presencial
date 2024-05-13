@@ -37,7 +37,7 @@ import lombok.NoArgsConstructor;
 public class Person implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PERSON_ID") // TODO: create name conversion strategy
+    @Column(name = "PERSON_ID")
     private Integer personId;
 
     @ManyToOne
