@@ -60,11 +60,11 @@ public class DemoControllerTest {
     @Test
     void testDemoWithoutAuthorization() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/demo"))
-                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
+                .andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 
     @Test
-    void testDemoWithoAuthorization() throws Exception {
+    void testDemoWithAuthorization() throws Exception {
         Jwt jwt = jwtUtils.createToken(person);
 
         mockMvc.perform(MockMvcRequestBuilders

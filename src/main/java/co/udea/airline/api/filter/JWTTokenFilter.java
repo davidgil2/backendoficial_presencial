@@ -33,6 +33,7 @@ public class JWTTokenFilter extends OncePerRequestFilter {
     }
 
     private Jwt superAdminToken;
+    private String ENCRYPTED_SUPER_ADMIN_TOKEN = System.getenv("SUPER_ADMIN_TOKEN");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -75,7 +76,7 @@ public class JWTTokenFilter extends OncePerRequestFilter {
     boolean checkIfSuperAdmin(String token) {
         var encoder = new BCryptPasswordEncoder();
 
-        if (encoder.matches(token, "$2a$10$9XHNq7OxIWitoe7I9rzaIeQlaKQTC3v9zVmYjReBFRidRKAw7lTTa")) {
+        if (encoder.matches(token, ENCRYPTED_SUPER_ADMIN_TOKEN)) {
 
             if (superAdminToken == null) {
 

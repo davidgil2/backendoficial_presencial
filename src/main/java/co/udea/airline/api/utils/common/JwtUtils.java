@@ -113,7 +113,12 @@ public class JwtUtils {
      * @return {@code true} if the token is valid, {@code false} otherwise
      */
     public boolean validateToken(Jwt jwt) {
-        return Instant.now().isAfter(jwt.getExpiresAt());
+        try {
+            jwtDecoder.decode(jwt.getTokenValue());
+        } catch (Exception e) {
+            return false;
+        }
+        return Instant.now().isBefore(jwt.getExpiresAt());
     }
 
 }
